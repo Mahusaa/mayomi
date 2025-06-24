@@ -11,7 +11,6 @@ import {
   Sparkles,
   Quote,
 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("story")
@@ -80,9 +79,6 @@ export default function AboutSection() {
         {/* Hero About Section */}
         <section className="mb-20">
           <div className="text-center mb-12">
-            <Badge className="bg-primary/10 text-primary border-primary/30 mb-4">
-              About Mayomi
-            </Badge>
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-6 leading-tight">
               Where Wellness Meets{" "}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">

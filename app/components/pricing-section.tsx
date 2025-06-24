@@ -175,7 +175,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-secondary">
-      <div className="mx-auto px-4 py-12 md:py-20">
+      <div className="mx-2 md:mx-8 px-4 py-12 md:py-20">
         <section className="mb-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Choose Your Treatment</h2>
@@ -197,7 +197,7 @@ export default function PricingPage() {
                 <Collapsible open={expandedSections[service.id]} onOpenChange={() => toggleSection(service.id)}>
                   <CollapsibleTrigger asChild>
                     <CardHeader
-                      className={`cursor-pointer flex items-center transition-all bg-white ${selectedService === service.id ? 'ring-2 ring-primary/20' : ''}`}
+                      className={`cursor-pointer flex items-center transition-all bg-white`}
                       onClick={() => setSelectedService(selectedService === service.id ? null : service.id)}
                     >
                       <div className="flex items-center justify-between w-full">
@@ -270,7 +270,7 @@ export default function PricingPage() {
                               </div>
                               <div className="flex items-center gap-4">
                                 <div className="text-right">
-                                  <div className="text-2xl md:text-3xl font-bold text-primary">IDR {option.price}</div>
+                                  <div className="text-xl md:text-3xl font-bold text-primary">IDR {option.price}</div>
                                 </div>
                                 <Button
                                   className={`${option.popular
@@ -474,7 +474,7 @@ export default function PricingPage() {
         {/* Enhanced Coming Soon Section */}
         <section className="mb-20">
           <Card className="border-2 border-dashed border-primary/40 bg-gradient-to-br from-primary/5 to-secondary overflow-hidden">
-            <CardContent className="p-12 text-center relative">
+            <CardContent className="p-4 text-center relative">
               <div className="absolute inset-0 bg-[url('/placeholder.svg?height=400&width=800')] opacity-5"></div>
               <div className="relative max-w-2xl mx-auto">
                 <h3 className="text-2xl md:text-3xl font-bold text-primary mb-6">Premium Products Launching Soon</h3>
@@ -495,12 +495,6 @@ export default function PricingPage() {
                   <Button className="bg-primary hover:bg-primary-700 text-white px-8 py-3 font-semibold">
                     <Info className="mr-2 h-4 w-4" />
                     Get Notified
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 font-semibold"
-                  >
-                    Learn More
                   </Button>
                 </div>
               </div>

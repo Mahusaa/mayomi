@@ -29,7 +29,7 @@ export default function Home() {
           <span className="inline-block bg-white/20 text-white text-xs font-semibold px-4 py-1 rounded-full backdrop-blur-sm border border-white/30 mb-2"> Everyone Deserves a Good Massage</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4 text-left">
             Relax, Rejuvenate, <span role="img" aria-label="woman in lotus">🧘‍♀️</span> <br className="hidden md:block" />
-            and Book Your Perfect Massage
+            and Book Your Perfect Massage Anytime, Anywhere
           </h1>
           <div className="flex gap-4 mt-2">
             <a href="#services" className="bg-[#6B7B5A] hover:bg-[#556346] text-white px-6 py-3 rounded-full font-semibold shadow transition">Get Started</a>
@@ -46,12 +46,7 @@ export default function Home() {
       <section className="flex justify-center items-center px-2 md:px-0 mb-10 bg-[#F7F3EF]">
         <div className="relative w-full max-w-2xl rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-primary/20 bg-white/90 dark:bg-primary-950/90 min-h-[220px] flex items-center justify-center transition-colors duration-300" style={{ backdropFilter: 'blur(5px)' }}>
           {/* Background image with soft overlay for harmony */}
-          <Image
-            src="/cta-lastt.jpg"
-            alt="Wellness Spa"
-            fill
-            className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90"
-          />
+          <img src="/cta-lastt.jpg" alt="Wellness Spa" className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90" />
           <div className="absolute inset-0 z-10" />
           <div className="relative z-20 w-full max-w-xl mx-auto px-4 py-8 text-center flex flex-col items-center justify-center">
             <h3 className="text-2xl sm:text-3xl font-extrabold mb-2 text-white drop-shadow">Ready to Relax & Rejuvenate?</h3>
