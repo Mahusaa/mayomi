@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-[#6B7B5A] text-white px-4 md:px-8 py-6 mt-auto">
+      <footer id="contact" className="bg-[#6B7B5A] text-white px-4 md:px-8 py-6 mt-20 md:mt-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <span className="font-bold">Mayomi Family Massage & Wellness</span> &copy; {new Date().getFullYear()}

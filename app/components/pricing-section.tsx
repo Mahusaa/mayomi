@@ -176,7 +176,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-secondary">
       <div className="mx-2 md:mx-8 px-4 py-12 md:py-20">
-        <section className="mb-20">
+        <section className="mb-20" id="services">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Choose Your Treatment</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
