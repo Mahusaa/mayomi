@@ -1,5 +1,4 @@
 import Image from "next/image";
-import PricingPage from "./components/pricing-section";
 import AboutSection from "./components/about-section";
 import Navbar from "./components/Navbar";
 import { Button } from "@/components/ui/button";
@@ -39,8 +38,6 @@ export default function Home() {
       </section>
 
       <AboutSection />
-
-      <PricingPage />
 
       {/* Enhanced Call to Action */}
       <section className="flex justify-center items-center px-2 md:px-0 mb-10 bg-[#F7F3EF]">

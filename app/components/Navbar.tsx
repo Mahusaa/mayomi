@@ -2,11 +2,14 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
+import CartButton from './CartButton';
+import Link from 'next/link';
 
 const NAV_LINKS = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About Us' },
   { href: '#services', label: 'Services' },
+  { href: '/pricing', label: 'Pricing' },
 ];
 
 export default function Navbar() {
@@ -14,7 +17,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // Handle scroll detection
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
@@ -66,22 +68,26 @@ export default function Navbar() {
       <nav className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 lg:px-8 py-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
-          <Image
-            src="/logo-mayomi.png"
-            alt="Mayomi Logo"
-            width={80}
-            height={80}
-            className={`rounded transition-all duration-300 ${scrolled ? "hidden" : ""}`}
-            priority
-          />
-          <Image
-            src="/mayomi-green.png"
-            alt="Mayomi Logo"
-            width={80}
-            height={80}
-            className={`rounded transition-all duration-300 ${scrolled ? "" : "hidden"}`}
-            priority
-          />
+          <Link href="/">
+            <Image
+              src="/logo-mayomi.png"
+              alt="Mayomi Logo"
+              width={80}
+              height={80}
+              className={`rounded transition-all duration-300 ${scrolled ? "hidden" : ""}`}
+              priority
+            />
+          </Link>
+          <Link href="/">
+            <Image
+              src="/mayomi-green.png"
+              alt="Mayomi Logo"
+              width={80}
+              height={80}
+              className={`rounded transition-all duration-300 ${scrolled ? "" : "hidden"}`}
+              priority
+            />
+          </Link>
         </div>
 
         {/* Desktop Nav Links */}
@@ -114,9 +120,10 @@ export default function Navbar() {
 
         {/* Desktop CTA Button */}
         <div className="hidden lg:flex items-center gap-4">
+          <CartButton scrolled={scrolled} />
           <button
             onClick={() => scrollToSection('services')}
-            className={`px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 border ${scrolled
+            className={`px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 border group ${scrolled
               ? 'bg-primary hover:bg-primary/90 text-white border-primary'
               : 'bg-white/90 hover:bg-white text-primary border-white/50'
               }`}
@@ -126,25 +133,28 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle navigation menu"
-        >
-          <span
-            className={`block w-6 h-0.5 transition-all duration-300 mb-1 ${scrolled ? 'bg-gray-700' : 'bg-white'
-              } ${open ? 'rotate-45 translate-y-1.5' : ''}`}
-          ></span>
-          <span
-            className={`block w-6 h-0.5 transition-all duration-300 mb-1 ${scrolled ? 'bg-gray-700' : 'bg-white'
-              } ${open ? 'opacity-0' : ''}`}
-          ></span>
-          <span
-            className={`block w-6 h-0.5 transition-all duration-300 ${scrolled ? 'bg-gray-700' : 'bg-white'
-              } ${open ? '-rotate-45 -translate-y-1.5' : ''}`}
-          ></span>
-        </button>
+        {/* Mobile Actions */}
+        <div className="lg:hidden flex items-center gap-3">
+          <CartButton scrolled={scrolled} />
+          <button
+            className="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle navigation menu"
+          >
+            <span
+              className={`block w-6 h-0.5 transition-all duration-300 mb-1 ${scrolled ? 'bg-gray-700' : 'bg-white'
+                } ${open ? 'rotate-45 translate-y-1.5' : ''}`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 transition-all duration-300 mb-1 ${scrolled ? 'bg-gray-700' : 'bg-white'
+                } ${open ? 'opacity-0' : ''}`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 transition-all duration-300 ${scrolled ? 'bg-gray-700' : 'bg-white'
+                } ${open ? '-rotate-45 -translate-y-1.5' : ''}`}
+            ></span>
+          </button>
+        </div>
 
         {/* Mobile Navigation Drawer */}
         {open && (
@@ -210,7 +220,8 @@ export default function Navbar() {
                 </div>
 
                 {/* CTA Section */}
-                <div className="p-6 border-t border-gray-200 flex-shrink-0">
+                <div className="p-6 border-t border-gray-200 flex-shrink-0 space-y-4">
+                  {/* Book Session Button - Full Width */}
                   <button
                     onClick={() => scrollToSection('services')}
                     className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
@@ -220,7 +231,7 @@ export default function Navbar() {
                   </button>
 
                   {/* Contact Info */}
-                  <div className="mt-4 space-y-2 text-sm text-gray-600">
+                  <div className="space-y-2 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4" />
                       <span>+62 812-3456-7890</span>
@@ -240,4 +251,4 @@ export default function Navbar() {
       </nav>
     </header>
   );
-} 
+}

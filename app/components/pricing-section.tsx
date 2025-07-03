@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useCart } from "@/app/contexts/CartContext"
 import {
   Clock,
   Sparkles,
@@ -14,23 +15,117 @@ import {
   Zap,
   Heart,
   Leaf,
+  ShoppingCart,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import Toast from "./Toast"
+import React from "react"
+
+// Type definitions
+interface ServiceOption {
+  duration: string;
+  price: string;
+  popular: boolean;
+  description: string;
+}
+
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  benefits: string[];
+  options: ServiceOption[];
+}
+
+interface Package {
+  name: string;
+  description: string;
+  price: string;
+  originalPrice: string;
+  savings: string;
+  popular: boolean;
+  includes: string[];
+}
+
+interface Addon {
+  name: string;
+  price: string;
+  icon: React.ReactNode;
+  description: string;
+  category: string;
+}
 
 export default function PricingPage() {
+  const { addItem } = useCart()
   const [selectedService, setSelectedService] = useState<string | null>(null)
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({})
-  const [currentAddOn, setCurrentAddOn] = useState(0)
+  const [currentAddOn, setCurrentAddOn] = useState<number>(0)
+  const [toast, setToast] = useState<{ message: string; isVisible: boolean }>({ message: '', isVisible: false })
 
   const toggleSection = (section: string) => {
     setExpandedSections((prev) => ({
       ...prev,
       [section]: !prev[section],
     }))
+  }
+
+  const handleAddService = (service: Service, option: ServiceOption) => {
+    addItem({
+      id: `${service.id}-${option.duration}`,
+      name: `${service.name} - ${option.duration}`,
+      price: parseInt(option.price.replace(/,/g, '')),
+      duration: option.duration,
+      category: 'service' as const,
+      description: option.description,
+      iconType: getIconType(service.icon),
+    })
+    setToast({ message: `${service.name} - ${option.duration} added to cart!`, isVisible: true })
+  }
+
+  const handleAddPackage = (pkg: Package) => {
+    addItem({
+      id: `package-${pkg.name.replace(/\s+/g, '-').toLowerCase()}`,
+      name: pkg.name,
+      price: parseInt(pkg.price.replace(/,/g, '')),
+      category: 'package' as const,
+      description: pkg.description,
+      iconType: 'package',
+    })
+    setToast({ message: `${pkg.name} package added to cart!`, isVisible: true })
+  }
+
+  const getIconType = (icon: React.ReactNode): string => {
+    // Simple function to determine icon type based on the icon component
+    if (React.isValidElement(icon)) {
+      const iconType = icon.type as { displayName?: string; name?: string };
+      const iconName = iconType.displayName || iconType.name || '';
+      if (iconName.includes('Sparkles')) return 'sparkles';
+      if (iconName.includes('Heart')) return 'heart';
+      if (iconName.includes('Zap')) return 'zap';
+      if (iconName.includes('Leaf')) return 'leaf';
+      if (iconName.includes('Clock')) return 'clock';
+      if (iconName.includes('Package')) return 'package';
+      if (iconName.includes('Plus')) return 'plus';
+    }
+    return 'sparkles'; // default fallback
+  }
+
+  const handleAddAddon = (addon: Addon) => {
+    addItem({
+      id: `addon-${addon.name.replace(/\s+/g, '-').toLowerCase()}`,
+      name: addon.name,
+      price: parseInt(addon.price.replace(/,/g, '')),
+      category: 'addon' as const,
+      description: addon.description,
+      iconType: getIconType(addon.icon),
+    })
+    setToast({ message: `${addon.name} addon added to cart!`, isVisible: true })
   }
 
   const massageServices = [
@@ -175,6 +270,12 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-secondary">
+      <Toast 
+        message={toast.message}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ message: '', isVisible: false })}
+        type="success"
+      />
       <div className="mx-2 md:mx-8 px-4 py-12 md:py-20">
         <section className="mb-20" id="services">
           <div className="text-center mb-12">
@@ -273,12 +374,14 @@ export default function PricingPage() {
                                   <div className="text-xl md:text-3xl font-bold text-primary">IDR {option.price}</div>
                                 </div>
                                 <Button
+                                  onClick={() => handleAddService(service, option)}
                                   className={`${option.popular
                                     ? "bg-primary hover:bg-primary-700 text-white"
                                     : "bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                                    } px-6 py-2 font-semibold`}
+                                    } px-6 py-2 font-semibold flex items-center gap-2`}
                                 >
-                                  Select
+                                  <ShoppingCart className="h-4 w-4" />
+                                  Add to Cart
                                 </Button>
                               </div>
                             </div>
@@ -345,12 +448,14 @@ export default function PricingPage() {
                   </div>
 
                   <Button
-                    className={`w-full py-3 font-semibold ${pkg.popular
+                    onClick={() => handleAddPackage(pkg)}
+                    className={`w-full py-3 font-semibold flex items-center justify-center gap-2 ${pkg.popular
                       ? "bg-primary hover:bg-primary-700 text-white shadow-lg"
                       : "bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white"
                       }`}
                   >
-                    Choose Package
+                    <ShoppingCart className="h-4 w-4" />
+                    Add Package to Cart
                   </Button>
                 </CardContent>
               </Card>
@@ -400,10 +505,12 @@ export default function PricingPage() {
                             <div className="flex items-center justify-between">
                               <div className="text-xl font-bold text-primary">IDR {addon.price}</div>
                               <Button
+                                onClick={() => handleAddAddon(addon)}
                                 size="sm"
                                 variant="outline"
-                                className="border-primary text-primary hover:bg-primary hover:text-white"
+                                className="border-primary text-primary hover:bg-primary hover:text-white flex items-center gap-1"
                               >
+                                <ShoppingCart className="h-3 w-3" />
                                 Add
                               </Button>
                             </div>
@@ -456,10 +563,12 @@ export default function PricingPage() {
                       <div className="flex items-center justify-between">
                         <div className="text-xl font-bold text-primary">IDR {addon.price}</div>
                         <Button
+                          onClick={() => handleAddAddon(addon)}
                           size="sm"
                           variant="outline"
-                          className="border-primary text-primary hover:bg-primary hover:text-white"
+                          className="border-primary text-primary hover:bg-primary hover:text-white flex items-center gap-1"
                         >
+                          <ShoppingCart className="h-3 w-3" />
                           Add
                         </Button>
                       </div>
