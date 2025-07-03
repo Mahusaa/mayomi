@@ -11,6 +11,8 @@ import {
   Sparkles,
   Quote,
 } from "lucide-react"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
+import Image from 'next/image';
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("story")
@@ -241,6 +243,32 @@ export default function AboutSection() {
             </div>
           </div>
         </section>
+
+
+        {/* Gallery Section (Slider) */}
+        <div id="gallery" className="mt-16 py-12 px-4 bg-white rounded-2xl shadow-lg max-w-4xl mx-auto flex flex-col items-center gap-4">
+          <h2 className="text-2xl font-bold text-primary mb-2">Gallery</h2>
+          <Carousel className="w-full max-w-2xl relative">
+            <CarouselContent>
+              {[
+                { src: '/gallery1.jpg', caption: 'Relaxing Massage Room' },
+                { src: '/gallery2.jpg', caption: 'Professional Therapists' },
+                { src: '/gallery3.jpg', caption: 'Serene Waiting Area' },
+                { src: '/gallery4.jpg', caption: 'Premium Facilities' },
+              ].map((img, i) => (
+                <CarouselItem key={i} className="flex flex-col items-center justify-center">
+                  <div className="w-full h-64 sm:h-80 rounded-xl overflow-hidden shadow-md flex items-center justify-center bg-gray-100">
+                    <Image src={img.src} alt={img.caption} width={600} height={320} className="object-cover w-full h-full" />
+                  </div>
+                  <span className="mt-3 text-base text-gray-700 font-medium text-center">{img.caption}</span>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-primary/80 text-primary hover:text-white border-none shadow-lg" />
+            <CarouselNext className="right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-primary/80 text-primary hover:text-white border-none shadow-lg" />
+          </Carousel>
+        </div>
+
       </div>
     </div>
   )

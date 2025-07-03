@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useMemo } from 'react'
 import { useCart } from '@/app/contexts/CartContext'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -17,7 +17,6 @@ import {
   Heart,
   Leaf,
   Zap,
-  Calendar,
 } from 'lucide-react'
 
 export default function Cart() {
@@ -30,8 +29,6 @@ export default function Cart() {
     getTotalItems,
     getTotalPrice
   } = useCart()
-
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -95,17 +92,17 @@ export default function Cart() {
     }
   }
 
-  const handleCheckout = () => {
-    setIsCheckingOut(true)
-    // Here you would typically redirect to a checkout page or open a booking modal
-    setTimeout(() => {
-      setIsCheckingOut(false)
-      // For now, just show a success message
-      alert('Thank you for your booking! We will contact you soon to confirm your appointment.')
-      clearCart()
-      closeCart()
-    }, 2000)
-  }
+
+  const whatsappNumber = '081333443299'
+  const whatsappMessage = useMemo(() => {
+    if (!state.items.length) return ''
+    let message = `Hello, I would like to order the following services at Mayomi:%0A%0A`
+    state.items.forEach((item, idx) => {
+      message += `${idx + 1}. ${item.name} x${item.quantity} - Rp${item.price.toLocaleString('id-ID')}%0A`
+    })
+    message += `%0ATotal: Rp${getTotalPrice().toLocaleString('id-ID')}`
+    return message
+  }, [state.items, getTotalPrice])
 
   if (!state.isOpen) return null
 
@@ -249,14 +246,16 @@ export default function Cart() {
                     <Trash2 className="h-4 w-4 mr-2 max-sm:h-4 max-sm:w-4" />
                     Clear Cart
                   </Button>
-                  <Button
-                    onClick={handleCheckout}
-                    disabled={isCheckingOut}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white max-sm:py-3 max-sm:text-sm"
+                  <a
+                    href={`https://wa.me/62${whatsappNumber.replace(/^0/, '')}?text=${whatsappMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg px-4 py-3 flex items-center justify-center gap-2 transition max-sm:py-3 max-sm:text-sm shadow"
+                    style={{ textAlign: 'center' }}
                   >
-                    {isCheckingOut ? 'Processing...' : 'Book Now'}
-                    <Calendar className="h-5 w-5 ml-2 max-sm:h-5 max-sm:w-5" />
-                  </Button>
+                    <svg viewBox="0 0 32 32" width="22" height="22" fill="white" className="inline-block align-middle" aria-hidden="true"><path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fillRule="evenodd" /></svg>
+                    Order via WhatsApp
+                  </a>
                 </div>
               </div>
             </div>

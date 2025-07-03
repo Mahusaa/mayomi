@@ -4,18 +4,21 @@ import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
 import CartButton from './CartButton';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import "@/app/globals.css";
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About Us' },
-  { href: '#services', label: 'Services' },
-  { href: '/pricing', label: 'Pricing' },
+  { href: '/', label: 'Home' },
+  { href: '/#about', label: 'About Us' },
+  { href: '/pricing', label: 'Services' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,20 +45,26 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll to section
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 80; // Account for fixed navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+  // Smooth scroll to section or navigate to route
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('#')) {
+      const sectionId = href.replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = 80; // Account for fixed navbar height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+        setActiveSection(sectionId);
+      }
+      setOpen(false);
+    } else {
+      router.push(href);
+      setOpen(false);
     }
-    setOpen(false); // Close mobile menu
   };
 
   return (
@@ -94,12 +103,12 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
             const sectionId = link.href.replace('#', '');
-            const isActive = activeSection === sectionId;
-
+            const isSection = link.href.startsWith('#');
+            const isActive = isSection ? activeSection === sectionId : typeof window !== 'undefined' && window.location.pathname === link.href;
             return (
               <button
                 key={link.href}
-                onClick={() => scrollToSection(sectionId)}
+                onClick={() => handleNavClick(link.href)}
                 className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative group ${scrolled
                   ? isActive
                     ? 'bg-primary text-white shadow-md'
@@ -108,6 +117,7 @@ export default function Navbar() {
                     ? 'bg-white/90 text-primary shadow-md'
                     : 'text-white/90 hover:text-white hover:bg-white/20'
                   }`}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {link.label}
                 {isActive && (
@@ -122,7 +132,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <CartButton scrolled={scrolled} />
           <button
-            onClick={() => scrollToSection('services')}
+            onClick={() => handleNavClick('#services')}
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 border group ${scrolled
               ? 'bg-primary hover:bg-primary/90 text-white border-primary'
               : 'bg-white/90 hover:bg-white text-primary border-white/50'
@@ -157,97 +167,104 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        {open && (
-          <div
-            className="fixed inset-0 z-[9999] lg:hidden"
-            style={{ position: 'fixed' }}
-            onClick={() => setOpen(false)}
-          >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-
-            {/* Drawer */}
+        <AnimatePresence>
+          {open && (
             <div
-              className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl transform transition-transform duration-300"
-              style={{ position: 'fixed', right: 0, top: 0, height: '100vh' }}
-              onClick={e => e.stopPropagation()}
+              className="fixed inset-0 z-[9999] lg:hidden"
+              style={{ position: 'fixed' }}
+              onClick={() => setOpen(false)}
             >
-              <div className="flex flex-col h-full overflow-hidden">
-                {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src="/mayomi-green.png"
-                      alt="Mayomi Logo"
-                      width={60}
-                      height={60}
-                    />
-                  </div>
-                  <button
-                    onClick={() => setOpen(false)}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+              {/* Backdrop */}
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out opacity-100 animate-fadeIn"></div>
 
-                {/* Navigation Links */}
-                <div className="flex-1 overflow-y-auto p-6">
-                  <nav className="space-y-2">
-                    {NAV_LINKS.map((link) => {
-                      const sectionId = link.href.replace('#', '');
-                      const isActive = activeSection === sectionId;
-
-                      return (
-                        <button
-                          key={link.href}
-                          onClick={() => scrollToSection(sectionId)}
-                          className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-between ${isActive
-                            ? 'bg-primary text-white shadow-md'
-                            : 'text-gray-700 hover:bg-primary/10 hover:text-primary'
-                            }`}
-                        >
-                          {link.label}
-                          {isActive && (
-                            <span className="w-2 h-2 bg-current rounded-full"></span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </nav>
-                </div>
-
-                {/* CTA Section */}
-                <div className="p-6 border-t border-gray-200 flex-shrink-0 space-y-4">
-                  {/* Book Session Button - Full Width */}
-                  <button
-                    onClick={() => scrollToSection('services')}
-                    className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <span>Book Your Session</span>
-                    <span className="text-lg">→</span>
-                  </button>
-
-                  {/* Contact Info */}
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4" />
-                      <span>+62 812-3456-7890</span>
+              {/* Drawer */}
+              <motion.div
+                initial={{ x: '100%', opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: '100%', opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 35 }}
+                className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl"
+                style={{ position: 'fixed', right: 0, top: 0, height: '100vh' }}
+                onClick={e => e.stopPropagation()}
+              >
+                <div className="flex flex-col h-full overflow-hidden">
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src="/mayomi-green.png"
+                        alt="Mayomi Logo"
+                        width={60}
+                        height={60}
+                      />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z" />
+                    <button
+                      onClick={() => setOpen(false)}
+                      className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
-                      <span>info@mayomi.com</span>
+                    </button>
+                  </div>
+
+                  {/* Navigation Links */}
+                  <div className="flex-1 overflow-y-auto p-6">
+                    <nav className="space-y-2">
+                      {NAV_LINKS.map((link) => {
+                        const sectionId = link.href.replace('#', '');
+                        const isSection = link.href.startsWith('#');
+                        const isActive = isSection ? activeSection === sectionId : typeof window !== 'undefined' && window.location.pathname === link.href;
+                        return (
+                          <button
+                            key={link.href}
+                            onClick={() => handleNavClick(link.href)}
+                            className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-between ${isActive
+                              ? 'bg-primary text-white shadow-md'
+                              : 'text-gray-700 hover:bg-primary/10 hover:text-primary'
+                              }`}
+                            aria-current={isActive ? 'page' : undefined}
+                          >
+                            {link.label}
+                            {isActive && (
+                              <span className="w-2 h-2 bg-current rounded-full"></span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </nav>
+                  </div>
+
+                  {/* CTA Section */}
+                  <div className="p-6 border-t border-gray-200 flex-shrink-0 space-y-4">
+                    {/* Book Session Button - Full Width */}
+                    <button
+                      onClick={() => handleNavClick('#services')}
+                      className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <span>Book Your Session</span>
+                      <span className="text-lg">→</span>
+                    </button>
+
+                    {/* Contact Info */}
+                    <div className="space-y-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4" />
+                        <span>+62 812-3456-7890</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z" />
+                        </svg>
+                        <span>info@mayomi.com</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
-        )}
+          )}
+        </AnimatePresence>
       </nav>
     </header>
   );

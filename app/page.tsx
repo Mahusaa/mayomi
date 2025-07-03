@@ -30,9 +30,18 @@ export default function Home() {
             Relax, Rejuvenate, <span role="img" aria-label="woman in lotus">🧘‍♀️</span> <br className="hidden md:block" />
             and Book Your Perfect Massage Anytime, Anywhere
           </h1>
-          <div className="flex gap-4 mt-2">
-            <a href="#services" className="bg-[#6B7B5A] hover:bg-[#556346] text-white px-6 py-3 rounded-full font-semibold shadow transition">Get Started</a>
-            <a href="#about" className="bg-white/90 border border-[#6B7B5A] text-[#6B7B5A] px-6 py-3 rounded-full font-semibold hover:bg-[#F7F9F6] transition">Learn More</a>
+          <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto">
+            <a
+              href="https://wa.me/6285711383843"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book Now on WhatsApp"
+              className="flex items-center justify-center gap-2 px-7 py-3 border border-white text-white rounded-full font-bold text-base bg-transparent hover:bg-white/10 transition-all shadow focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto max-w-xs"
+              style={{ minWidth: 0 }}
+            >
+              <svg viewBox="0 0 32 32" width="22" height="22" fill="white" className="inline-block align-middle" aria-hidden="true"><path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fillRule="evenodd" /></svg>
+              Book Now
+            </a>
           </div>
         </div>
       </section>
@@ -76,3 +85,4 @@ export default function Home() {
     </div>
   );
 }
+

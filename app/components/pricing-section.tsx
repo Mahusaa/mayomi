@@ -24,6 +24,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
 import Toast from "./Toast"
 import React from "react"
+import Image from 'next/image'
 
 // Type definitions
 interface ServiceOption {
@@ -270,13 +271,23 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-secondary">
-      <Toast 
+      <Toast
         message={toast.message}
         isVisible={toast.isVisible}
         onClose={() => setToast({ message: '', isVisible: false })}
         type="success"
       />
-      <div className="mx-2 md:mx-8 px-4 py-12 md:py-20">
+      <div className="mx-2">
+        <div className="w-full mb-10">
+          <Image
+            src="/massage.webp"
+            alt="Massage Service Header"
+            width={1600}
+            height={400}
+            className="w-full h-40 md:h-64 shadow-lg"
+            priority
+          />
+        </div>
         <section className="mb-20" id="services">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Choose Your Treatment</h2>
