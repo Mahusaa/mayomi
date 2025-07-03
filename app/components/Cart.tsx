@@ -18,7 +18,6 @@ import {
   Leaf,
   Zap,
   Calendar,
-  Phone
 } from 'lucide-react'
 
 export default function Cart() {
@@ -114,46 +113,51 @@ export default function Cart() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[110]
+        "
         onClick={closeCart}
       />
 
       {/* Cart Sidebar */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[120] transform transition-transform duration-300 ease-in-out
+        sm:max-w-md sm:w-full
+        max-sm:w-full max-sm:max-w-full max-sm:rounded-none max-sm:p-0">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-primary/5 to-secondary/5">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-primary/5 to-secondary/5
+            max-sm:p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <ShoppingCart className="h-6 w-6 text-primary" />
+              <div className="p-2 bg-primary/10 rounded-lg max-sm:p-1.5">
+                <ShoppingCart className="h-6 w-6 text-primary max-sm:h-5 max-sm:w-5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Your Cart</h2>
-                <p className="text-sm text-gray-600">
+                <h2 className="text-xl font-bold text-gray-900 max-sm:text-lg">Your Cart</h2>
+                <p className="text-sm text-gray-600 max-sm:text-xs">
                   {getTotalItems()} {getTotalItems() === 1 ? 'item' : 'items'}
                 </p>
               </div>
             </div>
             <button
               onClick={closeCart}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors max-sm:p-3 max-sm:-mr-2"
+              aria-label="Close cart"
             >
-              <X className="h-5 w-5 text-gray-600" />
+              <X className="h-5 w-5 text-gray-600 max-sm:h-7 max-sm:w-7" />
             </button>
           </div>
 
           {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-6 max-sm:p-3">
             {state.items.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="p-4 bg-gray-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <ShoppingCart className="h-8 w-8 text-gray-400" />
+              <div className="text-center py-12 max-sm:py-8">
+                <div className="p-4 bg-gray-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center max-sm:w-12 max-sm:h-12 max-sm:p-2">
+                  <ShoppingCart className="h-8 w-8 text-gray-400 max-sm:h-6 max-sm:w-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Your cart is empty</h3>
-                <p className="text-gray-600 mb-6">Add some services to get started!</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 max-sm:text-base">Your cart is empty</h3>
+                <p className="text-gray-600 mb-6 max-sm:text-xs max-sm:mb-4">Add some services to get started!</p>
                 <Button
                   onClick={closeCart}
-                  className="bg-primary hover:bg-primary/90 text-white"
+                  className="bg-primary hover:bg-primary/90 text-white max-sm:w-full max-sm:py-3 max-sm:text-sm"
                 >
                   Browse Services
                 </Button>
@@ -161,31 +165,31 @@ export default function Cart() {
             ) : (
               <div className="space-y-4">
                 {state.items.map((item) => (
-                  <Card key={item.id} className="border border-gray-200 hover:shadow-md transition-shadow">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
+                  <Card key={item.id} className="border border-gray-200 hover:shadow-md transition-shadow max-sm:text-sm">
+                    <CardContent className="p-4 max-sm:p-2">
+                      <div className="flex items-start justify-between gap-2">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
                             <Badge
                               variant="outline"
-                              className={`text-xs ${getCategoryColor(item.category)}`}
+                              className={`text-xs ${getCategoryColor(item.category)} max-sm:text-[10px]`}
                             >
                               {getCategoryIcon(item.category, item.iconType)}
                               {item.category}
                             </Badge>
                           </div>
-                          <h4 className="font-semibold text-gray-900 mb-1">{item.name}</h4>
+                          <h4 className="font-semibold text-gray-900 mb-1 max-sm:text-sm">{item.name}</h4>
                           {item.duration && (
-                            <p className="text-sm text-gray-600 mb-2 flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
+                            <p className="text-sm text-gray-600 mb-2 flex items-center gap-1 max-sm:text-xs">
+                              <Clock className="h-3 w-3 max-sm:h-3 max-sm:w-3" />
                               {item.duration}
                             </p>
                           )}
                           {item.description && (
-                            <p className="text-sm text-gray-500 mb-3">{item.description}</p>
+                            <p className="text-sm text-gray-500 mb-3 max-sm:text-xs">{item.description}</p>
                           )}
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-primary">
+                            <span className="font-bold text-primary max-sm:text-base">
                               {formatPrice(item.price)}
                             </span>
                             <div className="flex items-center gap-2">
@@ -193,26 +197,26 @@ export default function Cart() {
                                 variant="outline"
                                 size="sm"
                                 onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="h-8 w-8 p-0"
+                                className="h-8 w-8 p-0 max-sm:h-7 max-sm:w-7"
                               >
-                                <Minus className="h-3 w-3" />
+                                <Minus className="h-3 w-3 max-sm:h-3 max-sm:w-3" />
                               </Button>
-                              <span className="w-8 text-center font-medium">{item.quantity}</span>
+                              <span className="w-8 text-center font-medium max-sm:w-6">{item.quantity}</span>
                               <Button
                                 variant="outline"
                                 size="sm"
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="h-8 w-8 p-0"
+                                className="h-8 w-8 p-0 max-sm:h-7 max-sm:w-7"
                               >
-                                <Plus className="h-3 w-3" />
+                                <Plus className="h-3 w-3 max-sm:h-3 max-sm:w-3" />
                               </Button>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => removeItem(item.id)}
-                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50 max-sm:h-7 max-sm:w-7"
                               >
-                                <Trash2 className="h-3 w-3" />
+                                <Trash2 className="h-3 w-3 max-sm:h-3 max-sm:w-3" />
                               </Button>
                             </div>
                           </div>
@@ -227,52 +231,31 @@ export default function Cart() {
 
           {/* Footer */}
           {state.items.length > 0 && (
-            <div className="border-t border-gray-200 p-6 bg-gradient-to-r from-secondary/30 to-primary/5">
+            <div className="border-t border-gray-200 p-6 bg-gradient-to-r from-secondary/30 to-primary/5 max-sm:p-3">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold text-gray-900">Total</span>
-                  <span className="text-2xl font-bold text-primary">
+                  <span className="text-lg font-semibold text-gray-900 max-sm:text-base">Total</span>
+                  <span className="text-2xl font-bold text-primary max-sm:text-lg">
                     {formatPrice(getTotalPrice())}
                   </span>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 max-sm:flex-col">
                   <Button
                     variant="outline"
                     onClick={clearCart}
-                    className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+                    className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 max-sm:py-3 max-sm:text-sm"
                   >
-                    <Trash2 className="h-4 w-4 mr-2" />
+                    <Trash2 className="h-4 w-4 mr-2 max-sm:h-4 max-sm:w-4" />
                     Clear Cart
                   </Button>
                   <Button
                     onClick={handleCheckout}
                     disabled={isCheckingOut}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white shadow-lg"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white max-sm:py-3 max-sm:text-sm"
                   >
-                    {isCheckingOut ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Calendar className="h-4 w-4 mr-2" />
-                        Book Now
-                      </>
-                    )}
-                  </Button>
-                </div>
-
-                <div className="text-center">
-                  <p className="text-sm text-gray-600 mb-2">Need help? Contact us</p>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-primary hover:text-primary/80"
-                  >
-                    <Phone className="h-4 w-4 mr-2" />
-                    Call Now
+                    {isCheckingOut ? 'Processing...' : 'Book Now'}
+                    <Calendar className="h-5 w-5 ml-2 max-sm:h-5 max-sm:w-5" />
                   </Button>
                 </div>
               </div>
