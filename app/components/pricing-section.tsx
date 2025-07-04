@@ -318,7 +318,7 @@ export default function PricingPage() {
                             {service.icon}
                           </div>
                           <div className="text-left">
-                            <CardTitle className="text-xl md:text-2xl text-gray-800 mb-2">{service.name}</CardTitle>
+                            <CardTitle className="text-lg md:text-2xl text-gray-800 mb-2">{service.name}</CardTitle>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -376,13 +376,13 @@ export default function PricingPage() {
                               <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2">
                                   <Clock className="h-4 w-4 text-primary" />
-                                  <span className="font-semibold text-lg text-gray-800">{option.duration}</span>
+                                  <span className="font-semibold text-base text-gray-800 ">{option.duration}</span>
                                 </div>
-                                <p className="text-gray-600 text-sm">{option.description}</p>
+                                <p className="text-gray-600 text-xs">{option.description}</p>
                               </div>
                               <div className="flex items-center gap-4">
                                 <div className="text-right">
-                                  <div className="text-xl md:text-3xl font-bold text-primary">IDR {option.price}</div>
+                                  <div className="text-lg md:text-3xl font-bold text-primary">IDR {option.price}</div>
                                 </div>
                                 <Button
                                   onClick={() => handleAddService(service, option)}

@@ -16,6 +16,7 @@ import Image from 'next/image';
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("story")
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
   const values = [
     {
@@ -41,30 +42,6 @@ export default function AboutSection() {
       title: "Affordable Luxury",
       description: "Premium quality services accessible to everyone, without compromising on excellence",
       color: "from-purple-100 to-purple-200",
-    },
-  ]
-
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "Regular Client",
-      content: "Mayomi has transformed my wellness routine. The therapists are incredibly skilled and the atmosphere is so relaxing. I feel rejuvenated after every visit!",
-      rating: 5,
-      avatar: "/placeholder.svg",
-    },
-    {
-      name: "Michael Chen",
-      role: "First-time Visitor",
-      content: "As someone new to massage therapy, I was nervous at first. But the team at Mayomi made me feel so comfortable. The 90-minute session was absolutely perfect.",
-      rating: 5,
-      avatar: "/placeholder.svg",
-    },
-    {
-      name: "Emma Rodriguez",
-      role: "Wellness Enthusiast",
-      content: "Ive tried many massage places, but Mayomi stands out for their attention to detail and genuine care for clients. The pricing is also very reasonable for the quality.",
-      rating: 5,
-      avatar: "/placeholder.svg",
     },
   ]
 
@@ -214,29 +191,28 @@ export default function AboutSection() {
                   </div>
 
                   <div className="space-y-6">
-                    {testimonials.map((testimonial, index) => (
-                      <div key={index} className="border-l-4 border-primary/30 pl-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                          ))}
+                    <div className="flex flex-col gap-6">
+                      {[1, 2, 3, 4].map((num) => (
+                        <div key={num} className="w-full flex justify-center">
+                          <button
+                            type="button"
+                            onClick={() => setZoomedImage(`/review-${num}.png`)}
+                            className="focus:outline-none"
+                            style={{ padding: 0, background: 'none', border: 'none' }}
+                          >
+                            <Image
+                              src={`/review-${num}.png`}
+                              alt={`Google Review ${num}`}
+                              className="shadow-md border border-gray-100"
+                              width={600}
+                              height={400}
+                              style={{ height: 'auto', maxWidth: '100%', cursor: 'zoom-in' }}
+                              unoptimized
+                            />
+                          </button>
                         </div>
-                        <p className="text-gray-700 text-sm leading-relaxed mb-3">
-                          &quot;{testimonial.content}&quot;
-                        </p>
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                            <span className="text-primary text-sm font-semibold">
-                              {testimonial.name.charAt(0)}
-                            </span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-800 text-sm">{testimonial.name}</div>
-                            <div className="text-gray-500 text-xs">{testimonial.role}</div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -244,17 +220,43 @@ export default function AboutSection() {
           </div>
         </section>
 
+        <section className="my-16 py-10 px-6 bg-white rounded-2xl shadow-xl max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8" id="about-place">
+          <div className="flex-1 flex flex-col gap-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2 flex items-center gap-2">
+              <span className="inline-block bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Reservation</span>
+            </h2>
+            <div className="flex flex-col gap-3 text-gray-700 text-base">
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <span className="font-medium">Alamat:</span>
+                <span>Jl. Gabus Raya No.34A, RT./RW:4/RW.9, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12520</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" /></svg>
+                <span className="font-medium">Jam:</span>
+                <span>Buka <span className="inline-block ml-2 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold">Tutup pukul 21.00</span></span>
+              </div>
+              <div className="flex items-center gap-3">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a2 2 0 011.7 1.06l.94 1.88a2 2 0 001.7 1.06h3.24a2 2 0 001.7-1.06l.94-1.88A2 2 0 0116.72 3H19a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
+                <span className="font-medium">Telepon:</span>
+                <a href="tel:085711383843" className="text-primary hover:underline">0857-1138-3843</a>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 flex items-center justify-center">
+            <Image src="/gallery4.jpg" alt="Mayomi Location" width={320} height={220} className="rounded-xl shadow-lg object-cover w-full max-w-xs" />
+          </div>
+        </section>
 
-        {/* Gallery Section (Slider) */}
         <div id="gallery" className="mt-16 py-12 px-4 bg-white rounded-2xl shadow-lg max-w-4xl mx-auto flex flex-col items-center gap-4">
           <h2 className="text-2xl font-bold text-primary mb-2">Gallery</h2>
           <Carousel className="w-full max-w-2xl relative">
             <CarouselContent>
               {[
-                { src: '/gallery1.jpg', caption: 'Relaxing Massage Room' },
-                { src: '/gallery2.jpg', caption: 'Professional Therapists' },
+                { src: '/gallery1.jpg', caption: 'Wellness Decor Wall' },
+                { src: '/gallery2.jpg', caption: 'Serenity Treatment Room' },
                 { src: '/gallery3.jpg', caption: 'Serene Waiting Area' },
-                { src: '/gallery4.jpg', caption: 'Premium Facilities' },
+                { src: '/gallery4.jpg', caption: 'Calm Reception Area' },
               ].map((img, i) => (
                 <CarouselItem key={i} className="flex flex-col items-center justify-center">
                   <div className="w-full h-64 sm:h-80 rounded-xl overflow-hidden shadow-md flex items-center justify-center bg-gray-100">
@@ -268,6 +270,34 @@ export default function AboutSection() {
             <CarouselNext className="right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-primary/80 text-primary hover:text-white border-none shadow-lg" />
           </Carousel>
         </div>
+
+        {/* Zoom Modal */}
+        {zoomedImage && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            onClick={() => setZoomedImage(null)}
+            style={{ cursor: 'zoom-out' }}
+          >
+            <div className="relative w-full h-full flex justify-center items-center">
+              <Image
+                src={zoomedImage}
+                alt="Zoomed Review"
+                width={1920}
+                height={1080}
+                style={{ maxWidth: '100vw', maxHeight: '100vh', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }}
+                className="shadow-none border-none bg-transparent"
+                unoptimized
+              />
+              <button
+                className="absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 rounded-full px-3 py-1 hover:bg-black/80 transition"
+                onClick={e => { e.stopPropagation(); setZoomedImage(null); }}
+                aria-label="Close zoom"
+              >
+                &times;
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

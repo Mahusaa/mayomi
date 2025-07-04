@@ -2,6 +2,7 @@ import Image from "next/image";
 import AboutSection from "./components/about-section";
 import Navbar from "./components/Navbar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 
@@ -23,7 +24,6 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
-        {/* Content */}
         <div className="relative z-10 flex flex-col gap-6 max-w-2xl px-6 md:px-16 py-16 md:py-28 items-start">
           <span className="inline-block bg-white/20 text-white text-xs font-semibold px-4 py-1 rounded-full backdrop-blur-sm border border-white/30 mb-2"> Everyone Deserves a Good Massage</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4 text-left">
@@ -59,12 +59,14 @@ export default function Home() {
             <p className="text-base sm:text-lg text-white/90 mb-4 font-medium max-w-md mx-auto">
               Join <span className="font-bold text-amber-500">500+ happy clients</span> who trust us for their wellness journey.
             </p>
-            <Button
-              size="lg"
-              className="bg-amber-400 hover:bg-amber-500 text-primary font-bold px-8 py-3 text-base shadow-lg transition-all rounded-full w-full max-w-xs"
-            >
-              <span className="mr-2">✨</span> Book Your Experience Now
-            </Button>
+            <Link href="https://wa.me/6285711383843">
+              <Button
+                size="lg"
+                className="bg-amber-400 hover:bg-amber-500 text-primary font-bold px-8 py-3 text-base shadow-lg transition-all rounded-full w-full max-w-xs"
+              >
+                <span className="mr-2">✨</span> Book Your Experience Now
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -76,7 +78,7 @@ export default function Home() {
             <span className="font-bold">Mayomi Family Massage & Wellness</span> &copy; {new Date().getFullYear()}
           </div>
           <div className="flex gap-4">
-            <a href="mailto:info@mayomi.com" className="hover:underline">info@mayomi.com</a>
+            <a href="mailto:mayomi.jkt@gmail.com" className="hover:underline">mayomi.jkt@gmail.com</a>
             <a href="#" className="hover:underline">Instagram</a>
             <a href="#" className="hover:underline">WhatsApp</a>
           </div>
