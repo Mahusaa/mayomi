@@ -18,6 +18,7 @@ import {
   Leaf,
   Zap,
 } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Cart() {
   const {
@@ -93,7 +94,7 @@ export default function Cart() {
   }
 
 
-  const whatsappNumber = '081333443299'
+  const whatsappNumber = '085711383843'
   const whatsappMessage = useMemo(() => {
     if (!state.items.length) return ''
     let message = `Hello, I would like to order the following services at Mayomi:%0A%0A`
@@ -152,12 +153,15 @@ export default function Cart() {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2 max-sm:text-base">Your cart is empty</h3>
                 <p className="text-gray-600 mb-6 max-sm:text-xs max-sm:mb-4">Add some services to get started!</p>
-                <Button
-                  onClick={closeCart}
-                  className="bg-primary hover:bg-primary/90 text-white max-sm:w-full max-sm:py-3 max-sm:text-sm"
-                >
-                  Browse Services
-                </Button>
+                <Link href="/pricing">
+
+                  <Button
+                    className="bg-primary hover:bg-primary/90 text-white max-sm:w-full max-sm:py-3 max-sm:text-sm"
+                    onClick={closeCart}
+                  >
+                    Browse Services
+                  </Button>
+                </Link>
               </div>
             ) : (
               <div className="space-y-4">

@@ -284,7 +284,7 @@ export default function PricingPage() {
             alt="Massage Service Header"
             width={1600}
             height={400}
-            className="w-full h-40 md:h-64 shadow-lg"
+            className="w-full h-24 md:h-64 shadow-lg"
             priority
           />
         </div>

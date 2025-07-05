@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import { CartProvider } from "./contexts/CartContext";
 import { Manrope } from "next/font/google";
+import Footer from "./components/footer";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Navbar />
           <Cart />
           {children}
+          <Footer />
         </CartProvider>
       </body>
     </html>
