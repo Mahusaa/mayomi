@@ -43,7 +43,7 @@ export default function Home() {
               Book Now
             </a>
             <Link
-              href="/services"
+              href="/pricing"
               className="flex items-center justify-center gap-2 px-7 py-3 border border-white text-white rounded-full font-bold text-base bg-white/20 hover:bg-white/30 transition-all shadow focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto max-w-xs backdrop-blur-sm"
               style={{ minWidth: 0 }}
             >
