@@ -79,7 +79,14 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span className="text-white/80">Jl. Gabus Raya No.34A, RT./RW:4/RW.9, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12520</span>
+                <a 
+                  href="https://maps.google.com/?q=Jl.+Gabus+Raya+No.34A,+RT./RW:4/RW.9,+Ps.+Minggu,+Kota+Jakarta+Selatan,+Daerah+Khusus+Ibukota+Jakarta+12520"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-white transition-colors duration-300 cursor-pointer"
+                >
+                  Jl. Gabus Raya No.34A, RT./RW:4/RW.9, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12520
+                </a>
               </div>
               <div className="flex items-start space-x-3">
                 <svg className="w-5 h-5 text-white/60 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
