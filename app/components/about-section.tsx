@@ -194,10 +194,9 @@ export default function AboutSection() {
                     <div className="flex flex-col gap-6">
                       {[1, 2, 3, 4].map((num) => (
                         <div key={num} className="w-full flex justify-center">
-                          <a
-                            href="https://g.co/kgs/i5P1Jzm"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            type="button"
+                            onClick={() => setZoomedImage(`/review-${num}.png`)}
                             className="focus:outline-none transition-transform hover:scale-105"
                             style={{ padding: 0, background: 'none', border: 'none' }}
                           >
@@ -207,10 +206,10 @@ export default function AboutSection() {
                               className="shadow-md border border-gray-100 hover:shadow-lg transition-shadow"
                               width={600}
                               height={400}
-                              style={{ height: 'auto', maxWidth: '100%', cursor: 'pointer' }}
+                              style={{ height: 'auto', maxWidth: '100%', cursor: 'zoom-in' }}
                               unoptimized
                             />
-                          </a>
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -317,15 +316,23 @@ export default function AboutSection() {
             style={{ cursor: 'zoom-out' }}
           >
             <div className="relative w-full h-full flex justify-center items-center">
-              <Image
-                src={zoomedImage}
-                alt="Zoomed Review"
-                width={1920}
-                height={1080}
-                style={{ maxWidth: '100vw', maxHeight: '100vh', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }}
-                className="shadow-none border-none bg-transparent"
-                unoptimized
-              />
+              <a
+                href="https://g.co/kgs/i5P1Jzm"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="cursor-pointer"
+              >
+                <Image
+                  src={zoomedImage}
+                  alt="Zoomed Review - Click to view Google Reviews"
+                  width={1920}
+                  height={1080}
+                  style={{ maxWidth: '100vw', maxHeight: '100vh', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }}
+                  className="shadow-none border-none bg-transparent hover:opacity-90 transition-opacity"
+                  unoptimized
+                />
+              </a>
               <button
                 className="absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 rounded-full px-3 py-1 hover:bg-black/80 transition"
                 onClick={e => { e.stopPropagation(); setZoomedImage(null); }}
