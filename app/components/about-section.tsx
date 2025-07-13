@@ -194,22 +194,23 @@ export default function AboutSection() {
                     <div className="flex flex-col gap-6">
                       {[1, 2, 3, 4].map((num) => (
                         <div key={num} className="w-full flex justify-center">
-                          <button
-                            type="button"
-                            onClick={() => setZoomedImage(`/review-${num}.png`)}
-                            className="focus:outline-none"
+                          <a
+                            href="https://g.co/kgs/i5P1Jzm"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="focus:outline-none transition-transform hover:scale-105"
                             style={{ padding: 0, background: 'none', border: 'none' }}
                           >
                             <Image
                               src={`/review-${num}.png`}
                               alt={`Google Review ${num}`}
-                              className="shadow-md border border-gray-100"
+                              className="shadow-md border border-gray-100 hover:shadow-lg transition-shadow"
                               width={600}
                               height={400}
-                              style={{ height: 'auto', maxWidth: '100%', cursor: 'zoom-in' }}
+                              style={{ height: 'auto', maxWidth: '100%', cursor: 'pointer' }}
                               unoptimized
                             />
-                          </button>
+                          </a>
                         </div>
                       ))}
                     </div>
