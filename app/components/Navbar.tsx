@@ -126,6 +126,7 @@ export default function Navbar() {
               </button>
             );
           })}
+          <Link href="/blog" className="text-base font-medium text-gray-700 hover:text-primary transition-colors">Blog</Link>
         </div>
 
         {/* Desktop CTA Button */}
@@ -232,6 +233,14 @@ export default function Navbar() {
                           </button>
                         );
                       })}
+                      {/* Blog link for mobile */}
+                      <Link
+                        href="/blog"
+                        className="block w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 text-gray-700 hover:bg-primary/10 hover:text-primary"
+                        onClick={() => setOpen(false)}
+                      >
+                        Blog
+                      </Link>
                     </nav>
                   </div>
 
