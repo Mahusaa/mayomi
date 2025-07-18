@@ -5,6 +5,7 @@ import Cart from "./components/Cart";
 import { CartProvider } from "./contexts/CartContext";
 import { Manrope } from "next/font/google";
 import Footer from "./components/footer";
+import Script from "next/script";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -52,6 +53,19 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         {/* Manifest for PWA support */}
         <link rel="manifest" href="/manifest.json" />
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-PGCE021LNS"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PGCE021LNS');
+          `}
+        </Script>
       </head>
       <body
         className={`${manrope.className} antialiased`}
