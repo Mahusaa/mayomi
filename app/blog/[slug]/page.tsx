@@ -10,9 +10,16 @@ const posts = [
     content: (
       <>
         <section className="mb-8">
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            Di tengah padatnya aktivitas harian di Jakarta, tubuh dan pikiran kita memerlukan waktu untuk beristirahat. Salah satu cara efektif untuk memulihkan kebugaran adalah dengan full body massage. Jika kamu mencari tempat full body massage di Jakarta Selatan yang nyaman, profesional, dan tenang, <strong>Mayomi Family Massage & Wellness</strong> adalah pilihan yang tepat.
-          </p>
+          <div className="mb-6">
+            <Image
+              src="/blog-1.jpg"
+              alt="Full Body Massage di Mayomi Family Massage & Wellness Jakarta Selatan, suasana relaksasi, terapis profesional, dan kenyamanan spa di Jakarta Selatan"
+              width={800}
+              height={450}
+              className="w-full h-auto rounded-lg shadow-lg"
+              priority
+            />
+          </div>
         </section>
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-primary mb-3">Apa Itu Full Body Massage?</h2>
@@ -52,6 +59,9 @@ const posts = [
         </section>
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-primary mb-3">Reservasi Sekarang dan Rasakan Manfaatnya</h2>
+          <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            Di tengah padatnya aktivitas harian di Jakarta, tubuh dan pikiran kita memerlukan waktu untuk beristirahat. Salah satu cara efektif untuk memulihkan kebugaran adalah dengan full body massage. Jika kamu mencari tempat full body massage di Jakarta Selatan yang nyaman, profesional, dan tenang, <strong>Mayomi Family Massage & Wellness</strong> adalah pilihan yang tepat.
+          </p>
           <p className="mb-4">Sudah saatnya Anda memanjakan diri dan menjaga kesehatan tubuh dengan cara yang menyenangkan. Rasakan manfaat full body massage di tempat yang benar-benar peduli pada kenyamanan Anda.</p>
           <p className="mb-4">Reservasi sekarang juga melalui website atau WhatsApp kami untuk mendapatkan slot terbaik.</p>
           <div className="mb-2">
@@ -113,7 +123,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
       <div className="fixed inset-0 -z-10">
         <Image
-          src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1500&q=80"
+          src="/blog-1.jpg"
           alt="Massage Hands Background"
           fill
           className="w-full h-full object-cover object-center brightness-60 blur-[1px]"

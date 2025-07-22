@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Blog Mayomi: Tips & Info Massage Jakarta Selatan",
@@ -40,6 +41,16 @@ export default function BlogIndexPage() {
         <div className="space-y-8">
           {posts.map(post => (
             <div key={post.slug} className="bg-white/80 rounded-xl shadow p-6 hover:shadow-lg transition-shadow">
+              <div className="mb-3 flex justify-center">
+                <Image
+                  src="/blog-1.jpg"
+                  alt="Full Body Massage di Jakarta Selatan - Mayomi Blog Thumbnail"
+                  width={700}
+                  height={400}
+                  className="rounded-lg object-cover w-full max-h-64"
+                  priority={true}
+                />
+              </div>
               <h2 className="text-2xl font-bold text-primary mb-2">
                 <Link href={`/blog/${post.slug}`} className="hover:underline">
                   {post.title}
