@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import {
   Save,
@@ -18,16 +19,17 @@ import Image from "next/image"
 import Link from "next/link"
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle"
+import { toast } from "sonner"
 
 interface BlogPost {
   title: string
   slug: string
   content: string
   coverImage: string
+  imageAlt: string
   metaTitle: string
   metaDescription: string
   metaKeyword: string
-  category: string
   status: "draft" | "published"
 }
 
@@ -37,10 +39,10 @@ export default function BlogEditor() {
     slug: "",
     content: "",
     coverImage: "",
+    imageAlt: "",
     metaTitle: "",
     metaDescription: "",
     metaKeyword: "",
-    category: "",
     status: "draft",
   })
 
@@ -55,8 +57,29 @@ export default function BlogEditor() {
     }
   }, [post.title, post.slug])
 
-
-
+  const [loading, setLoading] = useState(false);
+  const handlePublish = async () => {
+    setLoading(true);
+    const publishedPost = { ...post, status: "published" as const };
+    setPost(publishedPost);
+    try {
+      const response = await fetch('/api/blog', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(publishedPost),
+      });
+      const result = await response.json();
+      console.log('API response:', result);
+      toast.success("Post published successfully!");
+    } catch (error) {
+      console.error('Error publishing post:', error);
+      toast.error("Failed to publish post.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background mt-20">
@@ -103,14 +126,26 @@ export default function BlogEditor() {
                     </div>
 
                     <div>
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="coverImage">Cover Image URL</Label>
                       <Input
-                        id="category"
-                        value={post.category}
-                        onChange={(e) => setPost((prev) => ({ ...prev, category: e.target.value }))}
-                        placeholder="e.g., Design, Development, Tutorial"
+                        id="coverImage"
+                        value={post.coverImage}
+                        onChange={(e) => setPost((prev) => ({ ...prev, coverImage: e.target.value }))}
+                        placeholder="e.g., https://example.com/image.jpg"
                       />
                     </div>
+
+                    <div>
+                      <Label htmlFor="imageAlt">Cover Image Alt Text</Label>
+                      <Input
+                        id="imageAlt"
+                        value={post.imageAlt}
+                        onChange={(e) => setPost((prev) => ({ ...prev, imageAlt: e.target.value }))}
+                        placeholder="e.g., A descriptive alt text for the image"
+                      />
+                    </div>
+
+                    
                   </CardContent>
                 </Card>
 
@@ -121,7 +156,7 @@ export default function BlogEditor() {
                     <ThemeToggle />
                   </CardHeader>
                   <CardContent>
-                                        <SimpleEditor
+                    <SimpleEditor
                       initialContent={post.content}
                       onUpdate={(html) => setPost((prev) => ({ ...prev, content: html }))}
                     />
@@ -137,12 +172,12 @@ export default function BlogEditor() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex flex-col gap-2">
-                      <Button variant="outline" className="w-full bg-transparent">
-                        <Save className="h-4 w-4 mr-2" />
-                        Save Draft
-                      </Button>
-                      <Button className="w-full">
-                        <Send className="h-4 w-4 mr-2" />
+                      <Button className="w-full" onClick={handlePublish} disabled={loading}>
+                        {loading ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <Send className="h-4 w-4 mr-2" />
+                        )}
                         Publish Now
                       </Button>
                     </div>
@@ -157,11 +192,11 @@ export default function BlogEditor() {
               <CardContent className="p-8">
                 {post.coverImage && (
                   <div className="aspect-video relative overflow-hidden rounded-lg mb-8">
-                    <Image src={post.coverImage || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
+                    <Image src={post.coverImage || "/placeholder.svg"} alt={post.imageAlt || post.title} fill className="object-cover" />
                   </div>
                 )}
 
-                {post.category && <Badge className="mb-4">{post.category}</Badge>}
+                
 
                 <h1 className="text-4xl font-bold mb-6">{post.title || "Your Blog Post Title"}</h1>
 

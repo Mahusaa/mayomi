@@ -6,6 +6,7 @@ import { CartProvider } from "./contexts/CartContext";
 import { Manrope } from "next/font/google";
 import Footer from "./components/footer";
 import Script from "next/script";
+import { Toaster } from "sonner";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -75,6 +76,7 @@ export default function RootLayout({
           <Cart />
           {children}
           <Footer />
+          <Toaster />
         </CartProvider>
       </body>
     </html>
