@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { parseCookies } from 'nookies';
 import { Phone } from 'lucide-react';
 import CartButton from './CartButton';
 import Link from 'next/link';
@@ -18,6 +19,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,6 +46,19 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    setIsAuthenticated(cookies.auth === 'true');
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch('/api/logout', {
+      method: 'POST',
+    });
+    setIsAuthenticated(false);
+    router.push('/login');
+  };
 
   // Smooth scroll to section or navigate to route
   const handleNavClick = (href: string) => {
@@ -127,6 +142,17 @@ export default function Navbar() {
             );
           })}
           <Link href="/blog" className="text-base font-medium text-gray-700 hover:text-primary transition-colors">Blog</Link>
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative group ${scrolled
+                ? 'bg-red-500 text-white shadow-md'
+                : 'bg-white/90 text-red-500 shadow-md'
+                }`}
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         {/* Desktop CTA Button */}
@@ -241,6 +267,17 @@ export default function Navbar() {
                       >
                         Blog
                       </Link>
+                      {isAuthenticated && (
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                            setOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-red-500 text-white shadow-md"
+                        >
+                          Logout
+                        </button>
+                      )}
                     </nav>
                   </div>
 

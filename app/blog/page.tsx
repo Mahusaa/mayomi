@@ -37,8 +37,8 @@ export default async function BlogIndexPage() {
           {posts.map((post: Blog) => (
             <div key={post.slug} className="bg-white/80 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
               <Image
-                src={post.coverImage || "/blog-1.jpg"}
-                alt={post.imageAlt || "Blog Post Thumbnail"}
+                src={post.coverImage ?? "/blog-1.jpg"}
+                alt={post.imageAlt ?? "Blog Post Thumbnail"}
                 width={700}
                 height={400}
                 className="w-full h-48 object-cover"

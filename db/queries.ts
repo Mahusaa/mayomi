@@ -13,3 +13,11 @@ export async function getAllPosts() {
 export async function getPostBySlug(slug: string) {
   return db.select().from(blog).where(eq(blog.slug, slug));
 }
+
+export async function updatePost(slug: string, post: Partial<NewBlog>) {
+  return db.update(blog).set(post).where(eq(blog.slug, slug)).returning();
+}
+
+export async function deletePostBySlug(slug: string) {
+  return db.delete(blog).where(eq(blog.slug, slug)).returning();
+}
