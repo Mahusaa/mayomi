@@ -11,5 +11,5 @@ export async function getAllPosts() {
 }
 
 export async function getPostBySlug(slug: string) {
-  return db.select().from(blog).where(eq(blog.title, slug));
+  return db.select().from(blog).where(eq(blog.slug, slug));
 }

@@ -1,3 +1,4 @@
+import { Blog } from "@/db/schema";
 import Link from "next/link";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -13,17 +14,11 @@ export const metadata: Metadata = {
   }
 };
 
-const posts = [
-  {
-    slug: "full-body-massage-jakarta-selatan",
-    title: "Full Body Massage Di Jakarta Selatan: Pengalaman Relaksasi Terbaik di Mayomi",
-    excerpt: "Temukan pengalaman relaksasi terbaik dengan full body massage di Mayomi Family Massage & Wellness, Jakarta Selatan. Baca manfaat, tips, dan alasan memilih Mayomi!",
-    date: "2024-06-01"
-  },
-  // Tambahkan post lain di sini
-];
+import { getAllPosts } from "@/db/queries";
 
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const posts = await getAllPosts();
+
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
       <div className="fixed inset-0 -z-10">
@@ -39,12 +34,12 @@ export default function BlogIndexPage() {
         <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-8 drop-shadow-lg text-center">Blog Mayomi</h1>
         <p className="text-lg text-gray-700 mb-10 text-center">Kumpulan artikel, tips, dan info seputar massage & wellness di Jakarta Selatan.</p>
         <div className="space-y-8">
-          {posts.map(post => (
+          {posts.map((post: Blog) => (
             <div key={post.slug} className="bg-white/80 rounded-xl shadow p-6 hover:shadow-lg transition-shadow">
               <div className="mb-3 flex justify-center">
                 <Image
-                  src="/blog-1.jpg"
-                  alt="Full Body Massage di Jakarta Selatan - Mayomi Blog Thumbnail"
+                  src={post.coverImage || "/blog-1.jpg"}
+                  alt={post.imageAlt || "Blog Post Thumbnail"}
                   width={700}
                   height={400}
                   className="rounded-lg object-cover w-full max-h-64"
@@ -56,7 +51,7 @@ export default function BlogIndexPage() {
                   {post.title}
                 </Link>
               </h2>
-              <p className="text-gray-700 mb-2">{post.excerpt}</p>
+              <p className="text-gray-700 mb-2">{post.metaDescription}</p>
               <Link href={`/blog/${post.slug}`} className="text-amber-600 font-semibold hover:underline">Baca Selengkapnya →</Link>
             </div>
           ))}

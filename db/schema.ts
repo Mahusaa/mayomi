@@ -23,6 +23,7 @@ export const blog = createTable(
   id: serial().primaryKey(),
   title: varchar('title', { length: 200 }).notNull(),
   content: text('content').notNull(),
+  slug: text('slug'),
   coverImage: text('cover_image'),
   imageAlt: varchar('image_alt'),
   metaTitle: varchar('meta_title', { length: 150 }),

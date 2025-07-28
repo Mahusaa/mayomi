@@ -23,7 +23,7 @@ import { toast } from "sonner"
 
 interface BlogPost {
   title: string
-  slug: string
+  slug: string | null
   content: string
   coverImage: string
   imageAlt: string
