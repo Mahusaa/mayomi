@@ -33,26 +33,28 @@ export default async function BlogIndexPage() {
       <main className="max-w-3xl mx-auto px-4 py-16 bg-white/90 rounded-2xl shadow-2xl mt-16 mb-20 backdrop-blur-md animate-fadeInUp">
         <h1 className="text-3xl md:text-4xl font-extrabold text-primary mb-8 drop-shadow-lg text-center">Blog Mayomi</h1>
         <p className="text-lg text-gray-700 mb-10 text-center">Kumpulan artikel, tips, dan info seputar massage & wellness di Jakarta Selatan.</p>
-        <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {posts.map((post: Blog) => (
-            <div key={post.slug} className="bg-white/80 rounded-xl shadow p-6 hover:shadow-lg transition-shadow">
-              <div className="mb-3 flex justify-center">
-                <Image
-                  src={post.coverImage || "/blog-1.jpg"}
-                  alt={post.imageAlt || "Blog Post Thumbnail"}
-                  width={700}
-                  height={400}
-                  className="rounded-lg object-cover w-full max-h-64"
-                  priority={true}
-                />
-              </div>
-              <h2 className="text-2xl font-bold text-primary mb-2">
-                <Link href={`/blog/${post.slug}`} className="hover:underline">
-                  {post.title}
+            <div key={post.slug} className="bg-white/80 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+              <Image
+                src={post.coverImage || "/blog-1.jpg"}
+                alt={post.imageAlt || "Blog Post Thumbnail"}
+                width={700}
+                height={400}
+                className="w-full h-48 object-cover"
+                priority={true}
+              />
+              <div className="p-6">
+                <h2 className="text-2xl font-bold text-primary mb-2">
+                  <Link href={`/blog/${post.slug}`} className="hover:underline">
+                    {post.title}
+                  </Link>
+                </h2>
+                <p className="text-gray-600 mb-4 text-base leading-relaxed">{post.metaDescription}</p>
+                <Link href={`/blog/${post.slug}`} className="inline-block bg-primary text-white font-bold py-2 px-4 rounded-full hover:bg-opacity-90 transition-colors">
+                  Baca Selengkapnya
                 </Link>
-              </h2>
-              <p className="text-gray-700 mb-2">{post.metaDescription}</p>
-              <Link href={`/blog/${post.slug}`} className="text-amber-600 font-semibold hover:underline">Baca Selengkapnya →</Link>
+              </div>
             </div>
           ))}
         </div>
