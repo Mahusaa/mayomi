@@ -1,3 +1,10 @@
+
+   @import '../styles/_variables.scss';                                       
+   @import '../styles/_keyframe-animations.scss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -128,4 +135,80 @@
 }
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in;
+}
+
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1 {
+  @apply text-4xl font-extrabold tracking-tight text-primary;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold tracking-tight text-primary;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold tracking-tight text-primary;
+}
+
+.prose h4 {
+  @apply text-xl font-bold tracking-tight text-primary;
+}
+
+.prose p {
+  @apply text-base leading-7;
+}
+
+.prose a {
+  @apply text-primary underline;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 italic;
+}
+
+.prose ul {
+  @apply list-disc pl-5;
+}
+
+.prose ol {
+  @apply list-decimal pl-5;
+}
+
+.prose code {
+  @apply rounded-md bg-muted px-2 py-1 font-mono text-sm;
+}
+
+.prose pre {
+  @apply rounded-lg bg-muted p-4;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose-sm h1 {
+  @apply text-3xl;
+}
+
+.prose-sm h2 {
+  @apply text-2xl;
+}
+
+.prose-sm h3 {
+  @apply text-xl;
+}
+
+.prose-sm h4 {
+  @apply text-lg;
+}
+
+.prose-sm p {
+  @apply text-sm leading-6;
 }

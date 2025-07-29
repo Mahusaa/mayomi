@@ -6,6 +6,9 @@ import { CartProvider } from "./contexts/CartContext";
 import { Manrope } from "next/font/google";
 import Footer from "./components/footer";
 import Script from "next/script";
+import { Toaster } from "sonner";
+import { getUser } from "@/db/queries";
+import { UserProvider } from "@/server/auth";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -23,6 +26,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  //eslint-disable-next-line
+  let userPromise = getUser().then((user) => user ?? null);
   return (
     <html lang="en">
       <head>
@@ -71,10 +76,13 @@ export default function RootLayout({
         className={`${manrope.className} antialiased`}
       >
         <CartProvider>
-          <Navbar />
-          <Cart />
-          {children}
-          <Footer />
+          <UserProvider userPromise={userPromise}>
+            <Navbar />
+            <Cart />
+            {children}
+            <Footer />
+            <Toaster />
+          </UserProvider>
         </CartProvider>
       </body>
     </html>

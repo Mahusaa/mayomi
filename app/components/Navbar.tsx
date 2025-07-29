@@ -1,24 +1,34 @@
 "use client"
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { Phone } from 'lucide-react';
 import CartButton from './CartButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import "@/app/globals.css";
 import { motion, AnimatePresence } from 'framer-motion';
+import { useUser } from '@/server/auth';
+import { signOut } from '../(login)/action';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/#about', label: 'About Us' },
   { href: '/pricing', label: 'Services' },
+  { href: '/blog', label: 'Blog' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   const router = useRouter();
+  const [activeSection, setActiveSection] = useState('home');
+  const { userPromise } = useUser()
+  const user = use(userPromise)
+  async function handleSignOut() {
+    await signOut()
+    router.refresh();
+    router.push('/');
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +54,8 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+
 
   // Smooth scroll to section or navigate to route
   const handleNavClick = (href: string) => {
@@ -126,7 +138,17 @@ export default function Navbar() {
               </button>
             );
           })}
-          <Link href="/blog" className="text-base font-medium text-gray-700 hover:text-primary transition-colors">Blog</Link>
+          {user && (
+            <button
+              onClick={handleSignOut}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative group ${scrolled
+                ? 'bg-red-500 text-white shadow-md'
+                : 'bg-white/90 text-red-500 shadow-md'
+                }`}
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         {/* Desktop CTA Button */}
@@ -233,14 +255,17 @@ export default function Navbar() {
                           </button>
                         );
                       })}
-                      {/* Blog link for mobile */}
-                      <Link
-                        href="/blog"
-                        className="block w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 text-gray-700 hover:bg-primary/10 hover:text-primary"
-                        onClick={() => setOpen(false)}
-                      >
-                        Blog
-                      </Link>
+                      {user && (
+                        <button
+                          onClick={() => {
+                            handleSignOut();
+                            setOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-red-500 text-white shadow-md"
+                        >
+                          Logout
+                        </button>
+                      )}
                     </nav>
                   </div>
 
