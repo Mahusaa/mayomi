@@ -31,12 +31,12 @@ export function Login() {
             <div className="bg-[#E5A7A0] text-white p-2 rounded-lg">
               <ShoppingBag className="h-6 w-6" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Kayana</h1>
+            <h1 className="text-2xl font-bold text-white">Mayomi</h1>
           </div>
 
           <div className="space-y-6">
             <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-bold text-white">Kayana</h2>
+              <h2 className="text-2xl font-bold text-white">Mayomi</h2>
               <p className="text-[#F4C7C3] text-sm">
                 Sign in to access your admin dashboard
               </p>
