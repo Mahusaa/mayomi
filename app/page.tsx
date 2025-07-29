@@ -62,7 +62,12 @@ export default function Home() {
       <section className="flex justify-center items-center px-4 sm:px-6 lg:px-8 mb-10 bg-[#F7F3EF]">
         <div className="relative w-full max-w-2xl rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-primary/20 bg-white/90 dark:bg-primary-950/90 min-h-[220px] flex items-center justify-center transition-colors duration-300" style={{ backdropFilter: 'blur(5px)' }}>
           {/* Background image with soft overlay for harmony */}
-          <img src="/cta-lastt.jpg" alt="Wellness Spa" className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90" />
+          <Image
+            src="/cta-lastt.jpg"
+            alt="Wellness Spa"
+            fill
+            className="object-cover object-center z-0 opacity-90"
+          />
           <div className="absolute inset-0 z-10" />
           <div className="relative z-20 w-full max-w-xl mx-auto px-6 sm:px-8 py-8 sm:py-10 text-center flex flex-col items-center justify-center">
             <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 sm:mb-4 text-white drop-shadow">Ready to Relax & Rejuvenate?</h3>

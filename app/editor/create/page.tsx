@@ -10,13 +10,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader2 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import {
-  Save,
   Send,
 } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle"
 import { toast } from "sonner"
@@ -118,7 +115,7 @@ export default function BlogEditor() {
                       <Label htmlFor="slug">URL Slug</Label>
                       <Input
                         id="slug"
-                        value={post.slug}
+                        value={post.slug ?? ""}
                         onChange={(e) => setPost((prev) => ({ ...prev, slug: e.target.value }))}
                         placeholder="url-friendly-slug"
                       />
@@ -145,7 +142,7 @@ export default function BlogEditor() {
                       />
                     </div>
 
-                    
+
                   </CardContent>
                 </Card>
 
@@ -196,7 +193,7 @@ export default function BlogEditor() {
                   </div>
                 )}
 
-                
+
 
                 <h1 className="text-4xl font-bold mb-6">{post.title || "Your Blog Post Title"}</h1>
 

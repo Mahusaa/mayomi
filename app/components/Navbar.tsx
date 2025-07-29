@@ -1,13 +1,14 @@
 "use client"
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { parseCookies } from 'nookies';
+import { useState, useEffect, use } from 'react';
 import { Phone } from 'lucide-react';
 import CartButton from './CartButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import "@/app/globals.css";
 import { motion, AnimatePresence } from 'framer-motion';
+import { useUser } from '@/server/auth';
+import { signOut } from '../(login)/action';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -18,9 +19,15 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+  const [activeSection, setActiveSection] = useState('home');
+  const { userPromise } = useUser()
+  const user = use(userPromise)
+  async function handleSignOut() {
+    await signOut()
+    router.refresh();
+    router.push('/');
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,18 +54,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const cookies = parseCookies();
-    setIsAuthenticated(cookies.auth === 'true');
-  }, []);
 
-  const handleLogout = async () => {
-    await fetch('/api/logout', {
-      method: 'POST',
-    });
-    setIsAuthenticated(false);
-    router.push('/login');
-  };
 
   // Smooth scroll to section or navigate to route
   const handleNavClick = (href: string) => {
@@ -142,9 +138,9 @@ export default function Navbar() {
             );
           })}
           <Link href="/blog" className="text-base font-medium text-gray-700 hover:text-primary transition-colors">Blog</Link>
-          {isAuthenticated && (
+          {user && (
             <button
-              onClick={handleLogout}
+              onClick={handleSignOut}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative group ${scrolled
                 ? 'bg-red-500 text-white shadow-md'
                 : 'bg-white/90 text-red-500 shadow-md'
@@ -267,10 +263,10 @@ export default function Navbar() {
                       >
                         Blog
                       </Link>
-                      {isAuthenticated && (
+                      {user && (
                         <button
                           onClick={() => {
-                            handleLogout();
+                            handleSignOut();
                             setOpen(false);
                           }}
                           className="w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 bg-red-500 text-white shadow-md"

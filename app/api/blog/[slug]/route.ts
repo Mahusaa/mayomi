@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getPostBySlug, updatePost } from '@/db/queries';
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const post = await getPostBySlug(params.slug);
+    const { slug } = await params
+    const post = await getPostBySlug(slug);
     if (post.length === 0) {
       return NextResponse.json({ message: 'Post not found' }, { status: 404 });
     }
@@ -14,7 +15,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { slug: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
     const updatedData = await req.json();

@@ -1,14 +1,8 @@
 import { NextResponse } from 'next/server';
 import { deletePostBySlug } from '@/db/queries';
-import { parse } from 'cookie';
 
 export async function DELETE(request: Request) {
   try {
-    const cookies = parse(request.headers.get('cookie') || '');
-    if (cookies.auth !== 'true') {
-      return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-    }
-
     const { slug } = await request.json();
 
     if (!slug) {

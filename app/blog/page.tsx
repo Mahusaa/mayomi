@@ -22,11 +22,13 @@ export default async function BlogIndexPage() {
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden">
       <div className="fixed inset-0 -z-10">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1500&q=80"
           alt="Massage Hands Background"
           className="w-full h-full object-cover object-center brightness-60 blur-[1px]"
-          loading="eager"
+          priority
+          width={1500}
+          height={1000}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-primary/20" />
       </div>

@@ -10,9 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader2, Save } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
-import Link from "next/link"
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle"
 import { toast } from "sonner"
@@ -26,11 +24,10 @@ interface BlogPost {
   metaTitle: string
   metaDescription: string
   metaKeyword: string
-  status: "draft" | "published"
 }
 
 interface BlogEditorProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default function BlogEditor({ params }: BlogEditorProps) {
@@ -43,17 +40,34 @@ export default function BlogEditor({ params }: BlogEditorProps) {
     metaTitle: "",
     metaDescription: "",
     metaKeyword: "",
-    status: "draft",
   })
 
   const [loading, setLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [resolvedParams, setResolvedParams] = useState<{ slug: string } | null>(null)
+
+  // Resolve the params Promise
+  useEffect(() => {
+    async function resolveParams() {
+      try {
+        const resolved = await params
+        setResolvedParams(resolved)
+      } catch {
+        setError('Failed to resolve route parameters')
+        setLoading(false)
+      }
+    }
+
+    resolveParams()
+  }, [params])
 
   useEffect(() => {
     async function fetchPost() {
+      if (!resolvedParams?.slug) return
+
       try {
-        const response = await fetch(`/api/blog/${params.slug}`)
+        const response = await fetch(`/api/blog/${resolvedParams.slug}`)
         if (!response.ok) {
           throw new Error(`Failed to fetch post: ${response.statusText}`)
         }
@@ -67,12 +81,12 @@ export default function BlogEditor({ params }: BlogEditorProps) {
       }
     }
 
-    if (params.slug) {
+    if (resolvedParams?.slug) {
       fetchPost()
-    } else {
+    } else if (resolvedParams) {
       setLoading(false)
     }
-  }, [params.slug])
+  }, [resolvedParams])
 
   // Auto-generate slug from title (only if it's a new post or slug is empty)
   useEffect(() => {
@@ -86,10 +100,12 @@ export default function BlogEditor({ params }: BlogEditorProps) {
   }, [post.title, post.slug])
 
   const handleUpdate = async () => {
+    if (!resolvedParams?.slug) return
+
     setIsSaving(true)
     try {
-      const { publishedAt, ...dataToUpdate } = post;
-      const response = await fetch(`/api/blog/${params.slug}`, {
+      const { ...dataToUpdate } = post;
+      const response = await fetch(`/api/blog/${resolvedParams.slug}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +129,7 @@ export default function BlogEditor({ params }: BlogEditorProps) {
     }
   }
 
-  if (loading) {
+  if (loading || !resolvedParams) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
