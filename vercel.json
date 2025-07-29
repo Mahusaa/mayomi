@@ -2,7 +2,6 @@
   "build": {
     "env": {
       "BUN_INSTALL": "1",
-      "DISABLE_ESLINT": "1"
     }
   }
 }
