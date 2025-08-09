@@ -9,6 +9,7 @@ import "@/app/globals.css";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/server/auth';
 import { signOut } from '../(login)/action';
+import { useCart } from '@/app/contexts/CartContext'
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -24,6 +25,27 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const { userPromise } = useUser()
   const user = use(userPromise)
+  const { state, getTotalPrice } = useCart()
+
+  const whatsappNumber = '085711383843'
+
+  const buildWhatsAppMessage = () => {
+    if (!state.items.length) {
+      return 'Hello, I would like to book a session at Mayomi.'
+    }
+    let message = `Hello, I would like to order the following services at Mayomi:%0A%0A`
+    state.items.forEach((item, idx) => {
+      message += `${idx + 1}. ${item.name} x${item.quantity} - Rp${item.price.toLocaleString('id-ID')}%0A`
+    })
+    message += `%0ATotal: Rp${getTotalPrice().toLocaleString('id-ID')}`
+    return message
+  }
+
+  const handleBookNow = () => {
+    const url = `https://wa.me/62${whatsappNumber.replace(/^0/, '')}?text=${buildWhatsAppMessage()}`
+    window.open(url, '_blank')
+  }
+
   async function handleSignOut() {
     await signOut()
     router.refresh();
@@ -155,7 +177,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <CartButton scrolled={scrolled} />
           <button
-            onClick={() => handleNavClick('#services')}
+            onClick={handleBookNow}
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 border group ${scrolled
               ? 'bg-primary hover:bg-primary/90 text-white border-primary'
               : 'bg-white/90 hover:bg-white text-primary border-white/50'
@@ -273,7 +295,7 @@ export default function Navbar() {
                   <div className="p-6 border-t border-gray-200 flex-shrink-0 space-y-4">
                     {/* Book Session Button - Full Width */}
                     <button
-                      onClick={() => handleNavClick('#services')}
+                      onClick={() => { handleBookNow(); setOpen(false); }}
                       className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                     >
                       <span>Book Your Session</span>
