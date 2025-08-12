@@ -27,7 +27,7 @@ export default function Navbar() {
   const user = use(userPromise)
   const { state, getTotalPrice } = useCart()
 
-  const whatsappNumber = '085711383843'
+  const whatsappNumber = '085212586168'
 
   const buildWhatsAppMessage = () => {
     if (!state.items.length) {
