@@ -306,7 +306,7 @@ export default function Navbar() {
                     <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <Phone className="h-4 w-4" />
-                        <span>+62 812-3456-7890</span>
+                        <span>+62 852-1258-6168</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
