@@ -32,7 +32,7 @@ export default function Home() {
           </h1>
           <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto">
             <a
-              href="https://wa.me/6285711383843"
+              href="https://wa.me/6285212586168"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Book Now on WhatsApp"
@@ -75,7 +75,7 @@ export default function Home() {
               Join <span className="font-bold text-amber-500">500+ happy clients</span> who trust us for their wellness journey.
             </p>
             <div className="w-full flex justify-center">
-              <Link href="https://wa.me/6285711383843" className="w-full max-w-xs sm:max-w-sm">
+              <Link href="https://wa.me/6285212586168" className="w-full max-w-xs sm:max-w-sm">
                 <Button
                   size="lg"
                   className="bg-amber-400 hover:bg-amber-500 text-primary font-bold px-8 py-4 text-base shadow-lg transition-all rounded-full w-full h-14 sm:h-12"

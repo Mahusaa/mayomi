@@ -276,7 +276,7 @@ export default function AboutSection() {
               <div className="flex items-center gap-3">
                 <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a2 2 0 011.7 1.06l.94 1.88a2 2 0 001.7 1.06h3.24a2 2 0 001.7-1.06l.94-1.88A2 2 0 0116.72 3H19a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
                 <span className="font-medium">Telepon:</span>
-                <a href="tel:085711383843" className="text-primary hover:underline">0857-1138-3843</a>
+                <a href="tel:085212586168" className="text-primary hover:underline">0852-1258-6168</a>
               </div>
             </div>
           </div>

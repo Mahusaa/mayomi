@@ -94,7 +94,7 @@ export default function Cart() {
   }
 
 
-  const whatsappNumber = '085711383843'
+  const whatsappNumber = '085212586168'
   const whatsappMessage = useMemo(() => {
     if (!state.items.length) return ''
     let message = `Hello, I would like to order the following services at Mayomi:%0A%0A`
