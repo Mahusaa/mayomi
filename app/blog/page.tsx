@@ -6,6 +6,9 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "Blog Mayomi: Tips & Info Massage Jakarta Selatan",
   description: "Kumpulan artikel, tips, dan informasi seputar massage, spa, dan wellness di Jakarta Selatan dari Mayomi Family Massage & Wellness.",
+  alternates: {
+    canonical: "https://mayomimassage.com/blog",
+  },
   openGraph: {
     title: "Blog Mayomi: Tips & Info Massage Jakarta Selatan",
     description: "Kumpulan artikel, tips, dan informasi seputar massage, spa, dan wellness di Jakarta Selatan dari Mayomi Family Massage & Wellness.",
