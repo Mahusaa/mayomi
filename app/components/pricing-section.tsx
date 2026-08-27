@@ -135,7 +135,7 @@ export default function PricingPage() {
       name: "Full Body Massage",
       description: "Complete relaxation for your entire body with therapeutic techniques",
       icon: <Sparkles className="h-6 w-6" />,
-      color: "from-primary-100 to-primary-200",
+      color: "from-mayomi-200 to-mayomi-300",
       benefits: ["Stress relief", "Muscle tension release", "Improved circulation", "Deep relaxation"],
       options: [
         { duration: "60 min", price: "85,000", popular: false, description: "Perfect for first-time visitors" },
@@ -148,7 +148,7 @@ export default function PricingPage() {
       name: "Reflexology",
       description: "Therapeutic pressure point massage focusing on feet and hands",
       icon: <Heart className="h-6 w-6" />,
-      color: "from-green-100 to-green-200",
+      color: "from-mayomi-100 to-mayomi-200",
       benefits: ["Improved energy flow", "Better sleep quality", "Reduced anxiety", "Enhanced well-being"],
       options: [
         { duration: "60 min", price: "90,000", popular: false, description: "Essential reflexology session" },
@@ -161,7 +161,7 @@ export default function PricingPage() {
       name: "Lava Stone Massage",
       description: "Hot stone therapy for deep muscle relaxation and healing",
       icon: <Zap className="h-6 w-6" />,
-      color: "from-orange-100 to-orange-200",
+      color: "from-gold-soft to-clay",
       benefits: ["Deep muscle relief", "Improved blood flow", "Stress reduction", "Pain management"],
       options: [{ duration: "90 min", price: "175,000", popular: true, description: "Signature hot stone experience" }],
     },
@@ -170,7 +170,7 @@ export default function PricingPage() {
       name: "Facial Treatment",
       description: "Rejuvenating skincare experience for glowing, healthy skin",
       icon: <Leaf className="h-6 w-6" />,
-      color: "from-pink-100 to-pink-200",
+      color: "from-sand to-clay",
       benefits: ["Skin rejuvenation", "Deep cleansing", "Anti-aging effects", "Hydration boost"],
       options: [
         { duration: "30 min", price: "70,000", popular: false, description: "Quick refresh facial" },
@@ -270,32 +270,42 @@ export default function PricingPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-secondary">
+    <div className="min-h-screen bg-wash">
       <Toast
         message={toast.message}
         isVisible={toast.isVisible}
         onClose={() => setToast({ message: '', isVisible: false })}
         type="success"
       />
-      <div className="mx-2">
-        <div className="w-full mb-10">
-          <Image
-            src="/massage.webp"
-            alt="Massage Service Header"
-            width={1600}
-            height={400}
-            className="w-full h-24 md:h-64 shadow-lg"
-            priority
-          />
-        </div>
-        <section className="mb-20" id="services">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Choose Your Treatment</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Select from our range of therapeutic treatments, each carefully designed to address your specific wellness
-              needs
+      {/* Page header */}
+      <div className="relative w-full h-56 md:h-80 overflow-hidden">
+        <Image
+          src="/massage.webp"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/90 via-mayomi-900/60 to-mayomi-900/30" />
+        <div className="absolute inset-0 flex items-end">
+          <div className="w-full max-w-6xl mx-auto px-4 md:px-8 pb-8 md:pb-12">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5 text-gold-soft" />
+              Layanan &amp; Harga
+            </span>
+            <h1 className="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">
+              Choose Your Treatment
+            </h1>
+            <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-white/75">
+              Setiap perawatan dirancang untuk kebutuhan wellness yang berbeda.
+              Harga berlaku di seluruh cabang Mayomi.
             </p>
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 md:px-8 pt-12">
+        <section className="mb-20" id="services">
 
           <div className="grid gap-6 md:gap-8">
             {massageServices.map((service) => (
@@ -346,7 +356,7 @@ export default function PricingPage() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                           {service.benefits.map((benefit, idx) => (
                             <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                              <Check className="h-3 w-3 text-green-500 flex-shrink-0" />
+                              <Check className="h-3 w-3 text-primary flex-shrink-0" />
                               {benefit}
                             </div>
                           ))}
@@ -452,7 +462,7 @@ export default function PricingPage() {
                     <h4 className="font-semibold text-gray-800 text-sm uppercase tracking-wide">Package Includes:</h4>
                     {pkg.includes.map((item, idx) => (
                       <div key={idx} className="flex items-start gap-3 text-sm text-gray-600">
-                        <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                         {item}
                       </div>
                     ))}

@@ -1,85 +1,111 @@
 import Image from "next/image";
 import AboutSection from "./components/about-section";
 import BranchesSection from "./components/branches-section";
-import { BRANCHES } from "@/lib/branches";
+import { BRANCHES, PRIMARY_BRANCH, waUrl } from "@/lib/branches";
 import Navbar from "./components/Navbar";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { MapPin, Sparkles, ArrowRight } from "lucide-react";
 
+const STATS = [
+  { value: `${BRANCHES.length}`, label: "Cabang" },
+  { value: "500+", label: "Happy Clients" },
+  { value: "09-22", label: "Buka Tiap Hari" },
+];
 
+const BOOKING_MESSAGE = "Halo Mayomi, saya ingin booking sesi massage.";
 
 export default function Home() {
   return (
-    <div className="bg-[#F7F9F6] min-h-screen flex flex-col">
-      {/* Navbar */}
+    <div className="bg-cream min-h-screen flex flex-col">
       <Navbar />
 
-      {/* Hero Section - Redesigned */}
-      <section id="home" className="relative w-full min-h-[520px] flex items-center pt-20">
-        <div className="absolute inset-0 w-full h-full">
+      {/* Hero */}
+      <section
+        id="home"
+        className="relative w-full min-h-[640px] md:min-h-[720px] flex items-center pt-20 overflow-hidden"
+      >
+        <div className="absolute inset-0">
           <Image
             src="/massage.webp"
-            alt="Massage background"
+            alt=""
             fill
-            className="object-cover w-full h-full"
+            className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-black/50" />
+          {/* Sage-tinted scrim keeps the photo on-brand and the copy legible */}
+          <div className="absolute inset-0 bg-gradient-to-r from-mayomi-900/90 via-mayomi-900/70 to-mayomi-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/60 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 flex flex-col gap-6 max-w-2xl px-6 md:px-16 py-16 md:py-28 items-start">
-          <div className="flex flex-wrap items-center gap-2 mb-2">
-            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-4 py-1 rounded-full backdrop-blur-sm border border-white/30">
-              Everyone Deserves a Good Massage
-            </span>
-            <a
-              href="#branches"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-              {BRANCHES.length} Cabang &middot; Kini di Gading Serpong
-            </a>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4 text-left">
-            Relax, Rejuvenate, <span role="img" aria-label="woman in lotus">🧘‍♀️</span> <br className="hidden md:block" />
-            and Book Your Perfect Massage Anytime, Anywhere
-          </h1>
-          <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto">
-            <a
-              href="https://wa.me/6285212586168"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Book Now on WhatsApp"
-              className="flex items-center justify-center gap-2 px-7 py-3 border border-white text-white rounded-full font-bold text-base bg-transparent hover:bg-white/10 transition-all shadow focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto max-w-xs"
-              style={{ minWidth: 0 }}
-            >
-              <svg viewBox="0 0 32 32" width="22" height="22" fill="white" className="inline-block align-middle" aria-hidden="true"><path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fillRule="evenodd" /></svg>
-              Book Now
-            </a>
-            <Link
-              href="/pricing"
-              className="flex items-center justify-center gap-2 px-7 py-3 border border-white text-white rounded-full font-bold text-base bg-white/20 hover:bg-white/30 transition-all shadow focus:outline-none focus:ring-2 focus:ring-white/50 w-full sm:w-auto max-w-xs backdrop-blur-sm"
-              style={{ minWidth: 0 }}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              View Services
-            </Link>
-          </div>
 
-          {/* Trust strip */}
-          <dl className="mt-6 grid grid-cols-3 gap-6 border-t border-white/20 pt-6 w-full max-w-md">
-            {[
-              { value: `${BRANCHES.length}`, label: "Cabang" },
-              { value: "500+", label: "Happy Clients" },
-              { value: "09-22", label: "Buka Tiap Hari" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <dt className="text-2xl font-bold text-white">{stat.value}</dt>
-                <dd className="text-xs text-white/70">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 py-20 md:py-28">
+          <div className="max-w-2xl">
+            {/* Eyebrow */}
+            <div className="flex flex-wrap items-center gap-2.5 animate-fade-up">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-medium tracking-wide text-white/90 backdrop-blur-sm">
+                <Sparkles className="h-3.5 w-3.5 text-gold-soft" />
+                Everyone Deserves a Good Massage
+              </span>
+              <a
+                href="#branches"
+                className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/15 px-3.5 py-1.5 text-xs font-semibold text-gold-soft backdrop-blur-sm transition-colors hover:bg-gold/25"
+              >
+                <MapPin className="h-3.5 w-3.5" />
+                {BRANCHES.length} Cabang &middot; Kini di Gading Serpong
+              </a>
+            </div>
+
+            <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.08] tracking-tight text-balance animate-fade-up delay-1">
+              Relax, rejuvenate,
+              <br />
+              <span className="text-mayomi-200">and unwind</span> &mdash; kapan
+              pun, di mana pun.
+            </h1>
+
+            <p className="mt-5 max-w-lg text-base md:text-lg leading-relaxed text-white/75 text-balance animate-fade-up delay-2">
+              Family massage &amp; wellness dengan terapis bersertifikat, ruang
+              yang tenang, dan harga yang masuk akal. Mulai dari Rp85.000.
+            </p>
+
+            {/* CTAs */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up delay-3">
+              <a
+                href={waUrl(PRIMARY_BRANCH, BOOKING_MESSAGE)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-mayomi-700 shadow-lift transition-all hover:bg-mayomi-50 focus:outline-none focus:ring-2 focus:ring-white/60"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 fill-current"
+                  aria-hidden="true"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+                </svg>
+                Booking via WhatsApp
+              </a>
+              <Link
+                href="/pricing"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
+              >
+                Lihat Harga
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+
+            {/* Trust strip */}
+            <dl className="mt-10 grid grid-cols-3 gap-8 max-w-md animate-fade-up delay-4">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="border-t border-gold/40 pt-4">
+                  <dt className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                    {stat.value}
+                  </dt>
+                  <dd className="mt-0.5 text-xs uppercase tracking-wider text-white/60">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 
@@ -87,37 +113,56 @@ export default function Home() {
 
       <BranchesSection />
 
-      {/* Enhanced Call to Action */}
-      <section className="flex justify-center items-center px-4 sm:px-6 lg:px-8 mb-10 bg-[#F7F3EF]">
-        <div className="relative w-full max-w-2xl rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-primary/20 bg-white/90 dark:bg-primary-950/90 min-h-[220px] flex items-center justify-center transition-colors duration-300" style={{ backdropFilter: 'blur(5px)' }}>
-          {/* Background image with soft overlay for harmony */}
-          <Image
-            src="/cta-lastt.jpg"
-            alt="Wellness Spa"
-            fill
-            className="object-cover object-center z-0 opacity-90"
-          />
-          <div className="absolute inset-0 z-10" />
-          <div className="relative z-20 w-full max-w-xl mx-auto px-6 sm:px-8 py-8 sm:py-10 text-center flex flex-col items-center justify-center">
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 sm:mb-4 text-white drop-shadow">Ready to Relax & Rejuvenate?</h3>
-            <p className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 font-medium max-w-md mx-auto leading-relaxed">
-              Join <span className="font-bold text-amber-500">500+ happy clients</span> who trust us for their wellness journey.
-            </p>
-            <div className="w-full flex justify-center">
-              <Link href="https://wa.me/6285212586168" className="w-full max-w-xs sm:max-w-sm">
-                <Button
-                  size="lg"
-                  className="bg-amber-400 hover:bg-amber-500 text-primary font-bold px-8 py-4 text-base shadow-lg transition-all rounded-full w-full h-14 sm:h-12"
-                >
-                  <span className="mr-2">✨</span> Book Your Experience Now
-                </Button>
-              </Link>
-            </div>
+      {/* Closing CTA */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-mayomi-700 via-mayomi-600 to-mayomi-800 py-16 md:py-24">
+        <Image
+          src="/cta-lastt.jpg"
+          alt=""
+          fill
+          className="object-cover object-center opacity-15"
+        />
+        {/* Soft gold bloom, echoing the accent used across the site */}
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold/20 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm">
+            <Sparkles className="h-3.5 w-3.5 text-gold-soft" />
+            Ready when you are
+          </span>
+
+          <h2 className="mt-5 text-3xl md:text-4xl font-bold text-white tracking-tight text-balance">
+            Siap untuk relaks &amp; rejuvenate?
+          </h2>
+
+          <p className="mt-4 text-base md:text-lg leading-relaxed text-white/75 text-balance">
+            Bergabung dengan{" "}
+            <span className="font-semibold text-gold-soft">500+ klien</span> yang
+            mempercayakan perjalanan wellness mereka pada Mayomi.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+            <a
+              href={waUrl(PRIMARY_BRANCH, BOOKING_MESSAGE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-mayomi-700 shadow-lift transition-all hover:bg-mayomi-50"
+            >
+              Book Your Experience
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#branches"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-8 py-3.5 text-base font-semibold text-white transition-all hover:bg-white/10"
+            >
+              <MapPin className="h-4 w-4" />
+              Cari Cabang Terdekat
+            </a>
           </div>
         </div>
       </section>
-
     </div>
   );
 }
-

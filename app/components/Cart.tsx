@@ -78,18 +78,20 @@ export default function Cart() {
     }
   }
 
+  // Category chips stay inside the brand palette: sage for the core
+  // offering, warm gold/clay for the extras.
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'service':
-        return 'bg-blue-100 text-blue-700 border-blue-200'
+        return 'bg-mayomi-100 text-mayomi-700 border-mayomi-200'
       case 'package':
-        return 'bg-green-100 text-green-700 border-green-200'
+        return 'bg-mayomi-200 text-mayomi-800 border-mayomi-300'
       case 'addon':
-        return 'bg-orange-100 text-orange-700 border-orange-200'
+        return 'bg-gold-soft text-mayomi-800 border-gold/30'
       case 'product':
-        return 'bg-purple-100 text-purple-700 border-purple-200'
+        return 'bg-sand text-mayomi-800 border-clay'
       default:
-        return 'bg-gray-100 text-gray-700 border-gray-200'
+        return 'bg-cream text-gray-700 border-clay'
     }
   }
 
