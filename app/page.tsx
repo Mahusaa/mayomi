@@ -1,5 +1,7 @@
 import Image from "next/image";
 import AboutSection from "./components/about-section";
+import BranchesSection from "./components/branches-section";
+import { BRANCHES } from "@/lib/branches";
 import Navbar from "./components/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -25,7 +27,18 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 flex flex-col gap-6 max-w-2xl px-6 md:px-16 py-16 md:py-28 items-start">
-          <span className="inline-block bg-white/20 text-white text-xs font-semibold px-4 py-1 rounded-full backdrop-blur-sm border border-white/30 mb-2"> Everyone Deserves a Good Massage</span>
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-4 py-1 rounded-full backdrop-blur-sm border border-white/30">
+              Everyone Deserves a Good Massage
+            </span>
+            <a
+              href="#branches"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              {BRANCHES.length} Cabang &middot; Kini di Gading Serpong
+            </a>
+          </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4 text-left">
             Relax, Rejuvenate, <span role="img" aria-label="woman in lotus">🧘‍♀️</span> <br className="hidden md:block" />
             and Book Your Perfect Massage Anytime, Anywhere
@@ -53,10 +66,26 @@ export default function Home() {
               View Services
             </Link>
           </div>
+
+          {/* Trust strip */}
+          <dl className="mt-6 grid grid-cols-3 gap-6 border-t border-white/20 pt-6 w-full max-w-md">
+            {[
+              { value: `${BRANCHES.length}`, label: "Cabang" },
+              { value: "500+", label: "Happy Clients" },
+              { value: "09-22", label: "Buka Tiap Hari" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <dt className="text-2xl font-bold text-white">{stat.value}</dt>
+                <dd className="text-xs text-white/70">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <AboutSection />
+
+      <BranchesSection />
 
       {/* Enhanced Call to Action */}
       <section className="flex justify-center items-center px-4 sm:px-6 lg:px-8 mb-10 bg-[#F7F3EF]">
