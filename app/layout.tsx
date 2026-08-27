@@ -18,7 +18,8 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: "Mayomi - Premium Massage & Wellness",
-  description: "Experience ultimate relaxation with our premium massage and wellness services",
+  description:
+    "Experience ultimate relaxation with our premium massage and wellness services. Kini hadir di 4 cabang: Pasar Minggu, Kebayoran Lama, Bintaro, dan Gading Serpong.",
 };
 
 export default function RootLayout({

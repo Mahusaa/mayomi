@@ -11,8 +11,36 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Mayomi sage scale */
+  --mayomi-50: #F4F6F1;
+  --mayomi-100: #E6EBDF;
+  --mayomi-200: #CDD8C1;
+  --mayomi-300: #AEBE9C;
+  --mayomi-400: #8D9F78;
+  --mayomi-500: #6B7B5A;
+  --mayomi-600: #5A6B4A;
+  --mayomi-700: #47563B;
+  --mayomi-800: #37432E;
+  --mayomi-900: #262F20;
   --mayomi-green: #6B7B5A;
-  --radius: 0.625rem;
+
+  /* Warm neutral surfaces */
+  --cream: #FAF8F4;
+  --sand: #F2EDE5;
+  --clay: #E4DCCF;
+
+  /* Accent */
+  --gold: #C9A227;
+  --gold-soft: #F0E2B6;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgb(38 47 32 / 0.05);
+  --shadow-sm: 0 2px 8px -2px rgb(38 47 32 / 0.08);
+  --shadow-md: 0 8px 24px -8px rgb(38 47 32 / 0.12);
+  --shadow-lg: 0 20px 48px -16px rgb(38 47 32 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(107 123 90 / 0.08), 0 12px 40px -12px rgb(107 123 90 / 0.28);
+
+  --radius: 1rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -47,6 +75,21 @@
 }
 
 @theme inline {
+  --color-mayomi-50: var(--mayomi-50);
+  --color-mayomi-100: var(--mayomi-100);
+  --color-mayomi-200: var(--mayomi-200);
+  --color-mayomi-300: var(--mayomi-300);
+  --color-mayomi-400: var(--mayomi-400);
+  --color-mayomi-500: var(--mayomi-500);
+  --color-mayomi-600: var(--mayomi-600);
+  --color-mayomi-700: var(--mayomi-700);
+  --color-mayomi-800: var(--mayomi-800);
+  --color-mayomi-900: var(--mayomi-900);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-clay: var(--clay);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -212,3 +255,94 @@
 .prose-sm p {
   @apply text-sm leading-6;
 }
+
+/* ---------------------------------------------------------------------------
+   Motion + surface utilities (Mayomi design system)
+   --------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float-soft {
+  animation: floatSoft 6s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+/* Stagger helpers for lists that fade in together */
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+.delay-5 { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-fade-up,
+  .animate-float-soft,
+  .animate-marquee,
+  .animate-fadeIn {
+    animation: none !important;
+  }
+}
+
+/* Frosted card used across hero, branch cards and the sticky nav */
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.5);
+}
+
+.glass-dark {
+  background: rgb(38 47 32 / 0.42);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.18);
+}
+
+.shadow-soft { box-shadow: var(--shadow-md); }
+.shadow-lift { box-shadow: var(--shadow-lg); }
+.shadow-glow { box-shadow: var(--shadow-glow); }
+
+/* Subtle grain/noise-free gradient wash for section backgrounds */
+.bg-wash {
+  background:
+    radial-gradient(60rem 30rem at 10% -10%, rgb(107 123 90 / 0.10), transparent 60%),
+    radial-gradient(50rem 26rem at 90% 0%, rgb(201 162 39 / 0.08), transparent 60%),
+    var(--cream);
+}
+
+.text-balance { text-wrap: balance; }
+
+/* Hide scrollbar on horizontal scroll rails while keeping them scrollable */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

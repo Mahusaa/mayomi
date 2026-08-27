@@ -10,9 +10,11 @@ import {
   Leaf,
   Sparkles,
   Quote,
+  MapPin,
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Image from 'next/image';
+import { BRANCHES, OPERATING_HOURS, mapsUrl, waUrl, telUrl } from '@/lib/branches';
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("story")
@@ -23,25 +25,25 @@ export default function AboutSection() {
       icon: <Heart className="h-8 w-8" />,
       title: "Family Warmth",
       description: "Creating a welcoming environment where every client feels like part of our family",
-      color: "from-red-100 to-red-200",
+      color: "from-gold-soft to-clay",
     },
     {
       icon: <Shield className="h-8 w-8" />,
       title: "Professional Excellence",
       description: "Skilled therapists committed to your safety, comfort, and wellness journey",
-      color: "from-blue-100 to-blue-200",
+      color: "from-mayomi-200 to-mayomi-300",
     },
     {
       icon: <Leaf className="h-8 w-8" />,
       title: "Holistic Wellness",
       description: "Promoting physical and mental wellness for a balanced, productive lifestyle",
-      color: "from-green-100 to-green-200",
+      color: "from-mayomi-100 to-mayomi-200",
     },
     {
       icon: <Sparkles className="h-8 w-8" />,
       title: "Affordable Luxury",
       description: "Premium quality services accessible to everyone, without compromising on excellence",
-      color: "from-purple-100 to-purple-200",
+      color: "from-sand to-clay",
     },
   ]
 
@@ -53,7 +55,7 @@ export default function AboutSection() {
   ]
 
   return (
-    <div className="min-h-screen bg-secondary">
+    <div className="bg-wash">
       <div className="container mx-auto px-4 py-12 md:py-20">
         {/* Hero About Section */}
         <section className="mb-20" id="about">
@@ -75,7 +77,7 @@ export default function AboutSection() {
             <div className="space-y-8">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-3xl"></div>
-                <div className="relative bg-white rounded-3xl p-8 shadow-xl">
+                <div className="relative bg-white rounded-3xl p-8 shadow-soft ring-1 ring-black/5">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="p-3 bg-primary/10 rounded-xl text-primary">
                       <Quote className="h-6 w-6" />
@@ -94,7 +96,7 @@ export default function AboutSection() {
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === tab.id
                           ? "bg-primary text-white shadow-md"
-                          : "bg-gray-100 text-gray-600 hover:bg-primary/10 hover:text-primary"
+                          : "bg-mayomi-50 text-mayomi-700 hover:bg-mayomi-100"
                           }`}
                       >
                         {tab.icon}
@@ -143,7 +145,7 @@ export default function AboutSection() {
                       <div className="space-y-4">
                         <div className="grid grid-cols-1 gap-4">
                           {values.map((value, index) => (
-                            <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
+                            <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-cream">
                               <div className={`p-2 rounded-lg bg-gradient-to-r ${value.color} text-primary`}>
                                 {value.icon}
                               </div>
@@ -184,7 +186,7 @@ export default function AboutSection() {
             <div className="space-y-8">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-3xl"></div>
-                <div className="relative bg-white rounded-3xl p-8 shadow-xl">
+                <div className="relative bg-white rounded-3xl p-8 shadow-soft ring-1 ring-black/5">
                   <div className="text-center mb-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">What Our Clients Say</h3>
                     <p className="text-gray-600">Real experiences from our valued clients</p>
@@ -220,72 +222,74 @@ export default function AboutSection() {
           </div>
         </section>
 
-        <section className="my-16 py-10 px-6 bg-white rounded-2xl shadow-xl max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8" id="about-place">
-          <div className="flex-1 flex flex-col gap-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2 flex items-center gap-2">
-              <span className="inline-block bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Reservation</span>
-            </h2>
-            <div className="flex flex-col gap-3 text-gray-700 text-base">
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                <span className="font-medium">Alamat:</span>
-                <a 
-                  href="https://maps.google.com/?q=Jl.+Gabus+Raya+No.34A,+RT./RW:4/RW.9,+Ps.+Minggu,+Kota+Jakarta+Selatan,+Daerah+Khusus+Ibukota+Jakarta+12520"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline cursor-pointer"
-                >
-                  Jl. Gabus Raya No.34A, RT./RW:4/RW.9, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12520
-                </a>
+        <section className="my-16 max-w-5xl mx-auto" id="about-place">
+          <div className="rounded-3xl bg-white p-6 md:p-10 shadow-soft ring-1 ring-black/5">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">Reservation</h2>
+                <p className="text-gray-600">
+                  Pilih cabang terdekat, lalu booking langsung lewat WhatsApp.
+                </p>
               </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" /></svg>
-                <div className="flex-1">
-                  <span className="font-medium text-gray-800">Jam Operasional:</span>
-                  <div className="mt-1 flex flex-col gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-lg">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-sm font-medium text-green-700">Buka Setiap Hari</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        <span className="font-medium">10:00</span>
-                      </div>
-                      <span className="text-gray-400">-</span>
-                      <div className="flex items-center gap-1">
-                        <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        </svg>
-                        <span className="font-medium">21:00</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span className="text-xs text-amber-600 font-medium">11 Jam Pelayanan</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a2 2 0 011.7 1.06l.94 1.88a2 2 0 001.7 1.06h3.24a2 2 0 001.7-1.06l.94-1.88A2 2 0 0116.72 3H19a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" /></svg>
-                <span className="font-medium">Telepon:</span>
-                <a href="tel:085212586168" className="text-primary hover:underline">0852-1258-6168</a>
+              <div className="flex items-center gap-2 rounded-full border border-mayomi-200 bg-mayomi-50 px-4 py-2 self-start md:self-auto">
+                <span className="h-2 w-2 rounded-full bg-mayomi-400 animate-pulse" />
+                <span className="text-sm font-medium text-mayomi-700">
+                  Buka setiap hari &middot; {OPERATING_HOURS}
+                </span>
               </div>
             </div>
-          </div>
-          <div className="flex-1 flex items-center justify-center">
-            <Image src="/gallery4.jpg" alt="Mayomi Location" width={320} height={220} className="rounded-xl shadow-lg object-cover w-full max-w-xs" />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {BRANCHES.map((branch) => (
+                <div
+                  key={branch.id}
+                  className="group rounded-2xl border border-gray-200 p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-soft"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                      <h3 className="font-semibold text-gray-800">{branch.area}</h3>
+                      <p className="text-xs text-gray-500">{branch.city}</p>
+                    </div>
+                    {branch.id === "gading-serpong" && (
+                      <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[11px] font-semibold text-gold">
+                        Baru
+                      </span>
+                    )}
+                  </div>
+
+                  <a
+                    href={mapsUrl(branch)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                  >
+                    <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <span className="leading-relaxed">{branch.address}</span>
+                  </a>
+
+                  <div className="mt-4 flex items-center gap-2">
+                    <a
+                      href={telUrl(branch)}
+                      className="flex-1 rounded-full border border-primary/30 px-4 py-2 text-center text-sm font-medium text-primary transition-colors hover:bg-primary/5"
+                    >
+                      {branch.phone}
+                    </a>
+                    <a
+                      href={waUrl(branch, `Halo Mayomi ${branch.area}, saya ingin booking sesi massage.`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-mayomi-700"
+                    >
+                      Booking
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        <div id="gallery" className="mt-16 py-12 px-4 bg-white rounded-2xl shadow-lg max-w-4xl mx-auto flex flex-col items-center gap-4">
+        <div id="gallery" className="mt-16 py-12 px-4 bg-white rounded-3xl shadow-soft ring-1 ring-black/5 max-w-4xl mx-auto flex flex-col items-center gap-4">
           <h2 className="text-2xl font-bold text-primary mb-2">Gallery</h2>
           <Carousel className="w-full max-w-2xl relative">
             <CarouselContent>
