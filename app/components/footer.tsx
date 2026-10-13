@@ -1,10 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { MapPin, Phone, Clock } from "lucide-react"
-import { BRANCHES, OPERATING_HOURS, mapsUrl, telUrl } from "@/lib/branches"
+import { BRANCHES, OPERATING_HOURS, PRIMARY_BRANCH, mapsUrl, telUrl, waUrl } from "@/lib/branches"
+import { PACKAGES, TREATMENTS } from "@/lib/menu"
 export default function Footer() {
   return (
-    <footer id="contact" className="bg-gradient-to-br from-[#5A6B4A] to-[#6B7B5A] text-white mt-20">
+    <footer id="contact" className="bg-gradient-to-br from-mayomi-700 to-mayomi-500 text-white mt-20">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
@@ -37,7 +38,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://wa.me/6285212586168"
+                href={waUrl(PRIMARY_BRANCH)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300"
@@ -54,10 +55,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Our Services</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Full Body Massage</Link></li>
-              <li><Link href="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Reflexology</Link></li>
-              <li><Link href="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Lava Stone Massage</Link></li>
-              <li><Link href="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Facial Treatment</Link></li>
+              {TREATMENTS.slice(0, 5).map((t) => (
+                <li key={t.id}><Link href="/pricing#treatments" className="text-white/80 hover:text-white transition-colors duration-300">{t.name}</Link></li>
+              ))}
+              <li><Link href="/pricing#packages" className="text-white/80 hover:text-white transition-colors duration-300">{PACKAGES.length} Paket Hemat</Link></li>
             </ul>
           </div>
 
@@ -65,10 +66,11 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/home" className="text-white/80 hover:text-white transition-colors duration-300">Home</Link></li>
+              <li><Link href="/" className="text-white/80 hover:text-white transition-colors duration-300">Home</Link></li>
               <li><Link href="/#about" className="text-white/80 hover:text-white transition-colors duration-300">About Us</Link></li>
               <li><Link href="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Services</Link></li>
-              <li><Link href="/home" className="text-white/80 hover:text-white transition-colors duration-300">Contact</Link></li>
+              <li><Link href="/#branches" className="text-white/80 hover:text-white transition-colors duration-300">Cabang</Link></li>
+              <li><Link href="/blog" className="text-white/80 hover:text-white transition-colors duration-300">Blog</Link></li>
             </ul>
           </div>
 
@@ -86,7 +88,12 @@ export default function Footer() {
                 <div key={branch.id} className="rounded-xl bg-white/5 p-4 transition-colors hover:bg-white/10">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-semibold text-sm text-white">{branch.area}</span>
-                    {branch.id === "gading-serpong" && (
+                    {branch.ladiesOnly && (
+                      <span className="rounded-full bg-rose-300/20 px-2 py-0.5 text-[10px] font-semibold text-rose-100">
+                        Ladies Only
+                      </span>
+                    )}
+                    {branch.badge && (
                       <span className="rounded-full bg-amber-300/20 px-2 py-0.5 text-[10px] font-semibold text-amber-200">
                         Baru
                       </span>

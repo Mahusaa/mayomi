@@ -117,7 +117,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('mayomi-cart')
+    const savedCart = localStorage.getItem('mayomi-cart-v2')
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(savedCart)
@@ -146,7 +146,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       description: item.description,
       iconType: item.iconType,
     }))
-    localStorage.setItem('mayomi-cart', JSON.stringify({ items: serializableItems }))
+    localStorage.setItem('mayomi-cart-v2', JSON.stringify({ items: serializableItems }))
   }, [state.items])
 
   const addItem = (item: Omit<CartItem, 'quantity'>) => {

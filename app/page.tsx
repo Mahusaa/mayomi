@@ -2,7 +2,7 @@ import Image from "next/image";
 import AboutSection from "./components/about-section";
 import BranchesSection from "./components/branches-section";
 import { BRANCHES, PRIMARY_BRANCH, waUrl } from "@/lib/branches";
-import Navbar from "./components/Navbar";
+import { STARTING_PRICE, formatIDR } from "@/lib/menu";
 import Link from "next/link";
 import { MapPin, Sparkles, ArrowRight } from "lucide-react";
 
@@ -17,8 +17,6 @@ const BOOKING_MESSAGE = "Halo Mayomi, saya ingin booking sesi massage.";
 export default function Home() {
   return (
     <div className="bg-cream min-h-screen flex flex-col">
-      <Navbar />
-
       {/* Hero */}
       <section
         id="home"
@@ -50,7 +48,7 @@ export default function Home() {
                 className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/15 px-3.5 py-1.5 text-xs font-semibold text-gold-soft backdrop-blur-sm transition-colors hover:bg-gold/25"
               >
                 <MapPin className="h-3.5 w-3.5" />
-                {BRANCHES.length} Cabang &middot; Kini di Gading Serpong
+                {BRANCHES.length} Cabang &middot; Jakarta &amp; Tangerang
               </a>
             </div>
 
@@ -63,7 +61,7 @@ export default function Home() {
 
             <p className="mt-5 max-w-lg text-base md:text-lg leading-relaxed text-white/75 text-balance animate-fade-up delay-2">
               Family massage &amp; wellness dengan terapis bersertifikat, ruang
-              yang tenang, dan harga yang masuk akal. Mulai dari Rp85.000.
+              yang tenang, dan harga yang masuk akal. Mulai dari {formatIDR(STARTING_PRICE)}.
             </p>
 
             {/* CTAs */}

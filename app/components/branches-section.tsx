@@ -10,14 +10,14 @@ export default function BranchesSection() {
         <div className="mx-auto max-w-2xl text-center mb-12">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
             <MapPin className="h-3.5 w-3.5" />
-            4 Cabang
+            {BRANCHES.length} Cabang
           </span>
           <h2 className="mt-4 text-3xl md:text-4xl font-bold text-primary text-balance">
             Temukan Mayomi Terdekat
           </h2>
           <p className="mt-3 text-gray-600 leading-relaxed text-balance">
-            Kini hadir di empat lokasi di Jakarta Selatan dan Tangerang, termasuk
-            cabang terbaru kami di Gading Serpong.
+            Hadir di Jakarta Selatan dan Tangerang. Pilih cabang terdekat, lalu
+            booking langsung lewat WhatsApp.
           </p>
         </div>
 
@@ -38,16 +38,23 @@ export default function BranchesSection() {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/70 via-mayomi-900/10 to-transparent" />
-                {branch.featured && (
-                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm">
-                    Cabang Utama
-                  </span>
-                )}
-                {branch.id === "gading-serpong" && (
-                  <span className="absolute left-3 top-3 rounded-full bg-gold px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                    Baru Dibuka
-                  </span>
-                )}
+                <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+                  {branch.featured && (
+                    <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm">
+                      Cabang Utama
+                    </span>
+                  )}
+                  {branch.badge && (
+                    <span className="rounded-full bg-gold px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+                      {branch.badge}
+                    </span>
+                  )}
+                  {branch.ladiesOnly && (
+                    <span className="rounded-full bg-rose-500 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+                      Ladies Only
+                    </span>
+                  )}
+                </div>
                 <div className="absolute bottom-3 left-4 right-4">
                   <h3 className="text-base font-bold text-white drop-shadow">
                     {branch.area}
