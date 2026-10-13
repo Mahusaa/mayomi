@@ -23,7 +23,7 @@ export interface Branch {
   ladiesOnly?: boolean
 }
 
-export const OPERATING_HOURS = "09.00 - 22.00 WIB"
+export const OPERATING_HOURS = "08.00 - 22.00 WIB"
 
 export const BRANCHES: Branch[] = [
   {
