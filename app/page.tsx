@@ -6,12 +6,6 @@ import { STARTING_PRICE, formatIDR } from "@/lib/menu";
 import Link from "next/link";
 import { MapPin, Sparkles, ArrowRight } from "lucide-react";
 
-const STATS = [
-  { value: `${BRANCHES.length}`, label: "Cabang" },
-  { value: "500+", label: "Happy Clients" },
-  { value: "09-22", label: "Buka Tiap Hari" },
-];
-
 const BOOKING_MESSAGE = "Halo Mayomi, saya ingin booking sesi massage.";
 
 export default function Home() {
@@ -89,20 +83,6 @@ export default function Home() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
-
-            {/* Trust strip */}
-            <dl className="mt-10 grid grid-cols-3 gap-8 max-w-md animate-fade-up delay-4">
-              {STATS.map((stat) => (
-                <div key={stat.label} className="border-t border-gold/40 pt-4">
-                  <dt className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                    {stat.value}
-                  </dt>
-                  <dd className="mt-0.5 text-xs uppercase tracking-wider text-white/60">
-                    {stat.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </div>
       </section>
