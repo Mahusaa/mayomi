@@ -1,10 +1,11 @@
 "use client"
 import Image from 'next/image';
 import { useState, useEffect, use } from 'react';
-import { Phone } from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import { BRANCHES, OPERATING_HOURS } from '@/lib/branches';
 import CartButton from './CartButton';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import "@/app/globals.css";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/server/auth';
@@ -15,7 +16,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/#about', label: 'About Us' },
   { href: '/#branches', label: 'Cabang' },
-  { href: '/pricing', label: 'Services' },
+  { href: '/pricing', label: 'Layanan' },
   { href: '/blog', label: 'Blog' },
 ];
 
@@ -23,28 +24,20 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('home');
   const { userPromise } = useUser()
   const user = use(userPromise)
-  const { state, getTotalPrice } = useCart()
+  const { state, toggleCart } = useCart()
 
-  const whatsappNumber = '085212586168'
-
-  const buildWhatsAppMessage = () => {
-    if (!state.items.length) {
-      return 'Hello, I would like to book a session at Mayomi.'
-    }
-    let message = `Hello, I would like to order the following services at Mayomi:%0A%0A`
-    state.items.forEach((item, idx) => {
-      message += `${idx + 1}. ${item.name} x${item.quantity} - Rp${item.price.toLocaleString('id-ID')}%0A`
-    })
-    message += `%0ATotal: Rp${getTotalPrice().toLocaleString('id-ID')}`
-    return message
-  }
-
+  // Booking goes through a specific branch: checkout from the cart when it
+  // has items, otherwise send people to the branch picker.
   const handleBookNow = () => {
-    const url = `https://wa.me/62${whatsappNumber.replace(/^0/, '')}?text=${buildWhatsAppMessage()}`
-    window.open(url, '_blank')
+    if (state.items.length) {
+      toggleCart()
+    } else {
+      router.push('/#branches')
+    }
   }
 
   async function handleSignOut() {
@@ -139,7 +132,7 @@ export default function Navbar() {
           {NAV_LINKS.map((link) => {
             const sectionId = link.href.replace('#', '');
             const isSection = link.href.startsWith('#');
-            const isActive = isSection ? activeSection === sectionId : typeof window !== 'undefined' && window.location.pathname === link.href;
+            const isActive = isSection ? activeSection === sectionId : pathname === link.href;
             return (
               <button
                 key={link.href}
@@ -260,7 +253,7 @@ export default function Navbar() {
                       {NAV_LINKS.map((link) => {
                         const sectionId = link.href.replace('#', '');
                         const isSection = link.href.startsWith('#');
-                        const isActive = isSection ? activeSection === sectionId : typeof window !== 'undefined' && window.location.pathname === link.href;
+                        const isActive = isSection ? activeSection === sectionId : pathname === link.href;
                         return (
                           <button
                             key={link.href}
@@ -306,14 +299,14 @@ export default function Navbar() {
                     {/* Contact Info */}
                     <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        <span>+62 852-1258-6168</span>
+                        <MapPin className="h-4 w-4" />
+                        <span>{BRANCHES.length} cabang &middot; {OPERATING_HOURS}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z" />
                         </svg>
-                        <span>info@mayomi.com</span>
+                        <span>mayomi.jkt@gmail.com</span>
                       </div>
                     </div>
                   </div>

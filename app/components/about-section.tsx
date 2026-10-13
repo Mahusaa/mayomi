@@ -250,11 +250,18 @@ export default function AboutSection() {
                       <h3 className="font-semibold text-gray-800">{branch.area}</h3>
                       <p className="text-xs text-gray-500">{branch.city}</p>
                     </div>
-                    {branch.id === "gading-serpong" && (
-                      <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[11px] font-semibold text-gold">
-                        Baru
-                      </span>
-                    )}
+                    <div className="flex flex-wrap justify-end gap-1.5">
+                      {branch.ladiesOnly && (
+                        <span className="rounded-full bg-rose-50 px-2.5 py-1 text-[11px] font-semibold text-rose-600">
+                          Ladies Only
+                        </span>
+                      )}
+                      {branch.badge && (
+                        <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[11px] font-semibold text-gold">
+                          Baru
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <a

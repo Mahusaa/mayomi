@@ -17,6 +17,10 @@ export interface Branch {
   featured?: boolean
   /** Set for branches that have not opened yet. */
   openingSoon?: boolean
+  /** Short highlight shown as a badge, e.g. "Baru Dibuka". */
+  badge?: string
+  /** Branch only serves female guests. */
+  ladiesOnly?: boolean
 }
 
 export const OPERATING_HOURS = "09.00 - 22.00 WIB"
@@ -50,8 +54,9 @@ export const BRANCHES: Branch[] = [
     whatsapp: "6285881002850",
     mapsQuery: "Mayomi Family Massage Kebayoran Lama Jakarta Selatan",
     hours: OPERATING_HOURS,
-    tags: ["Dekat Cipulir", "Ruang Ber-AC", "Walk-in Friendly"],
+    tags: ["Khusus Wanita", "Dekat Cipulir", "Ruang Ber-AC"],
     image: "/gallery1.jpg",
+    ladiesOnly: true,
   },
   {
     id: "bintaro",
@@ -80,6 +85,7 @@ export const BRANCHES: Branch[] = [
     hours: OPERATING_HOURS,
     tags: ["Cabang Terbaru", "Ruang Baru", "Parkir Ruko"],
     image: "/gallery3.jpg",
+    badge: "Baru Dibuka",
   },
 ]
 
