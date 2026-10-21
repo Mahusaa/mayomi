@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
+import CartBar from "./components/CartBar";
 import { CartProvider } from "./contexts/CartContext";
 import { Manrope } from "next/font/google";
 import Footer from "./components/footer";
@@ -30,7 +31,7 @@ export default function RootLayout({
   //eslint-disable-next-line
   let userPromise = getUser().then((user) => user ?? null);
   return (
-    <html lang="en">
+    <html lang="id">
       <head>
         {/* Standard favicon */}
         <link rel="icon" href="/favicon.ico" />
@@ -82,6 +83,7 @@ export default function RootLayout({
             <Cart />
             {children}
             <Footer />
+            <CartBar />
             <Toaster />
           </UserProvider>
         </CartProvider>

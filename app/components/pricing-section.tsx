@@ -124,7 +124,7 @@ export default function PricingPage() {
           <SectionHeading
             icon={<Sparkles className="h-5 w-5" />}
             title="Treatment"
-            subtitle="Pilih durasi, lalu tambahkan ke keranjang untuk booking via WhatsApp."
+            subtitle="Pilih durasi, tambahkan ke keranjang, lalu kirim booking ke cabang pilihanmu via WhatsApp."
           />
           <div className="grid gap-5 md:grid-cols-2">
             {TREATMENTS.map((treatment) => (
@@ -157,7 +157,7 @@ export default function PricingPage() {
                     Paling Favorit
                   </span>
                 )}
-                <span className="text-xs font-semibold uppercase tracking-wider text-gold">
+                <span className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
                   {pkg.code}
                 </span>
                 <h3 className="mt-1 text-lg font-bold leading-snug text-gray-800">
@@ -220,7 +220,7 @@ export default function PricingPage() {
                   type="button"
                   onClick={() => handleAddAddon(addon)}
                   aria-label={`Tambah ${addon.name}`}
-                  className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-white"
+                  className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-white"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -284,6 +284,9 @@ function TreatmentCard({
   onAdd: (option: MenuOption) => void
 }) {
   const [expanded, setExpanded] = useState(false)
+  const [selected, setSelected] = useState<MenuOption>(
+    () => treatment.options.find((o) => o.popular) ?? treatment.options[0]
+  )
 
   return (
     <article className="flex flex-col rounded-2xl bg-white p-5 md:p-6 shadow-soft ring-1 ring-black/5 transition-shadow hover:shadow-lift">
@@ -292,7 +295,7 @@ function TreatmentCard({
           <MenuIcon name={treatment.icon} className="h-6 w-6" />
         </div>
         <div className="min-w-0">
-          <span className="text-xs font-semibold uppercase tracking-wider text-gold">
+          <span className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
             {treatment.category}
           </span>
           <h3 className="text-lg md:text-xl font-bold text-gray-800">{treatment.name}</h3>
@@ -310,36 +313,47 @@ function TreatmentCard({
         {expanded ? "Sembunyikan" : "Selengkapnya"}
       </button>
 
-      <div className="mt-4 space-y-2">
-        {treatment.options.map((option) => (
-          <div
-            key={option.duration}
-            className={`flex items-center justify-between gap-3 rounded-xl border px-4 py-3 ${
-              option.popular ? "border-primary/40 bg-mayomi-50" : "border-black/10"
-            }`}
-          >
-            <div className="flex items-center gap-2 text-sm text-gray-700">
-              <Clock className="h-4 w-4 text-primary" />
-              <span className="font-medium">{option.duration} menit</span>
-              {option.popular && (
-                <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
-                  Favorit
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="font-bold text-primary">{formatIDR(option.price)}</span>
+      <div className="mt-auto pt-5">
+        <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-gray-500">
+          <Clock className="h-3.5 w-3.5" />
+          Pilih durasi
+        </p>
+        <div role="radiogroup" aria-label={`Durasi ${treatment.name}`} className="grid grid-cols-3 gap-2">
+          {treatment.options.map((option) => {
+            const isSelected = option.duration === selected.duration
+            return (
               <button
+                key={option.duration}
                 type="button"
-                onClick={() => onAdd(option)}
-                aria-label={`Tambah ${treatment.name} ${option.duration} menit`}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-mayomi-700"
+                role="radio"
+                aria-checked={isSelected}
+                onClick={() => setSelected(option)}
+                className={`relative rounded-xl border px-2 py-2.5 text-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
+                  isSelected
+                    ? "border-primary bg-mayomi-50 text-mayomi-800"
+                    : "border-black/10 text-gray-600 hover:border-primary/40"
+                }`}
               >
-                <Plus className="h-4 w-4" />
+                {option.popular && (
+                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
+                    Favorit
+                  </span>
+                )}
+                <span className="block text-sm font-semibold">{option.duration} menit</span>
+                <span className="block text-xs">{formatIDR(option.price)}</span>
               </button>
-            </div>
-          </div>
-        ))}
+            )
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onAdd(selected)}
+          className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-mayomi-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+        >
+          <Plus className="h-4 w-4" />
+          Tambah {selected.duration} menit &middot; {formatIDR(selected.price)}
+        </button>
       </div>
     </article>
   )

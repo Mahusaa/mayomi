@@ -1,6 +1,7 @@
 import { MapPin, Phone, Clock, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import { BRANCHES, mapsUrl, waUrl, telUrl } from "@/lib/branches"
+import OpenStatus from "./open-status"
 
 export default function BranchesSection() {
   return (
@@ -70,9 +71,16 @@ export default function BranchesSection() {
                   <span className="leading-relaxed">{branch.address}</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 text-sm text-gray-600">
-                  <Clock className="h-4 w-4 flex-shrink-0 text-primary" />
-                  <span>Setiap hari, {branch.hours}</span>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-600">
+                    <Clock className="h-4 w-4 flex-shrink-0 text-primary" />
+                    <span>Setiap hari, {branch.hours}</span>
+                  </div>
+                  {!branch.openingSoon && (
+                    <div className="pl-6">
+                      <OpenStatus />
+                    </div>
+                  )}
                 </div>
 
                 <a

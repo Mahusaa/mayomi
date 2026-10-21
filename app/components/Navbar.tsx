@@ -13,8 +13,8 @@ import { signOut } from '../(login)/action';
 import { useCart } from '@/app/contexts/CartContext'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/#about', label: 'About Us' },
+  { href: '/', label: 'Beranda' },
+  { href: '/#about', label: 'Tentang Kami' },
   { href: '/#branches', label: 'Cabang' },
   { href: '/pricing', label: 'Layanan' },
   { href: '/blog', label: 'Blog' },
@@ -177,7 +177,7 @@ export default function Navbar() {
               : 'bg-white/90 hover:bg-white text-primary border-white/50'
               }`}
           >
-            Book Now
+            Booking
             <span className="text-lg transition-transform group-hover:translate-x-1">→</span>
           </button>
         </div>
@@ -292,7 +292,7 @@ export default function Navbar() {
                       onClick={() => { handleBookNow(); setOpen(false); }}
                       className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                     >
-                      <span>Book Your Session</span>
+                      <span>Booking Sekarang</span>
                       <span className="text-lg">→</span>
                     </button>
 

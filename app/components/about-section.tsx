@@ -257,7 +257,7 @@ export default function AboutSection() {
                         </span>
                       )}
                       {branch.badge && (
-                        <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[11px] font-semibold text-gold">
+                        <span className="rounded-full bg-gold/15 px-2.5 py-1 text-[11px] font-semibold text-gold-deep">
                           Baru
                         </span>
                       )}
