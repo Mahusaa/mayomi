@@ -24,6 +24,9 @@ export interface Branch {
 }
 
 export const OPERATING_HOURS = "08.00 - 22.00 WIB"
+/** Opening and closing hour (WIB, 24h) behind OPERATING_HOURS. */
+export const OPEN_HOUR = 8
+export const CLOSE_HOUR = 22
 
 export const BRANCHES: Branch[] = [
   {
