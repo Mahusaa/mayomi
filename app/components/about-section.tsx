@@ -15,6 +15,7 @@ import {
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Image from 'next/image';
 import { BRANCHES, OPERATING_HOURS, mapsUrl, waUrl, telUrl } from '@/lib/branches';
+import { accentAt } from '@/lib/accents';
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("story")
@@ -25,25 +26,21 @@ export default function AboutSection() {
       icon: <Heart className="h-8 w-8" />,
       title: "Family Warmth",
       description: "Creating a welcoming environment where every client feels like part of our family",
-      color: "from-gold-soft to-clay",
     },
     {
       icon: <Shield className="h-8 w-8" />,
       title: "Professional Excellence",
       description: "Skilled therapists committed to your safety, comfort, and wellness journey",
-      color: "from-mayomi-200 to-mayomi-300",
     },
     {
       icon: <Leaf className="h-8 w-8" />,
       title: "Holistic Wellness",
       description: "Promoting physical and mental wellness for a balanced, productive lifestyle",
-      color: "from-mayomi-100 to-mayomi-200",
     },
     {
       icon: <Sparkles className="h-8 w-8" />,
       title: "Affordable Luxury",
       description: "Premium quality services accessible to everyone, without compromising on excellence",
-      color: "from-sand to-clay",
     },
   ]
 
@@ -55,14 +52,20 @@ export default function AboutSection() {
   ]
 
   return (
-    <div className="bg-wash">
-      <div className="container mx-auto px-4 py-12 md:py-20">
+    <div className="relative overflow-hidden bg-wash">
+      <div className="blob -left-32 top-40 h-96 w-96 bg-mayomi-300/30" aria-hidden="true" />
+      <div className="blob -right-32 top-[40rem] h-96 w-96 bg-peach/20" aria-hidden="true" />
+      <div className="relative container mx-auto px-4 py-12 md:py-20">
         {/* Hero About Section */}
         <section className="mb-20" id="about">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-6 leading-tight">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-peach-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-peach-deep">
+              <Heart className="h-3.5 w-3.5" />
+              Tentang Kami
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold text-mayomi-800 mb-6 leading-tight">
               Where Wellness Meets{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 Family Care
               </span>
             </h2>
@@ -76,10 +79,10 @@ export default function AboutSection() {
             {/* Left: Image and Content */}
             <div className="space-y-8">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-3xl"></div>
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-mayomi-300/60 via-teal/20 to-peach/40 rounded-[1.75rem] blur-sm"></div>
                 <div className="relative bg-white rounded-3xl p-8 shadow-soft ring-1 ring-black/5">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-primary/10 rounded-xl text-primary">
+                    <div className="p-3 bg-brand-warm rounded-xl text-white shadow-soft">
                       <Quote className="h-6 w-6" />
                     </div>
                     <div>
@@ -95,7 +98,7 @@ export default function AboutSection() {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === tab.id
-                          ? "bg-primary text-white shadow-md"
+                          ? "bg-brand text-white shadow-glow"
                           : "bg-mayomi-50 text-mayomi-700 hover:bg-mayomi-100"
                           }`}
                       >
@@ -145,8 +148,8 @@ export default function AboutSection() {
                       <div className="space-y-4">
                         <div className="grid grid-cols-1 gap-4">
                           {values.map((value, index) => (
-                            <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-cream">
-                              <div className={`p-2 rounded-lg bg-gradient-to-r ${value.color} text-primary`}>
+                            <div key={index} className={`flex items-start gap-3 p-3 rounded-xl ${accentAt(index).soft}`}>
+                              <div className={`p-2 rounded-lg bg-gradient-to-br ${accentAt(index).gradient} text-white shadow-sm`}>
                                 {value.icon}
                               </div>
                               <div>
@@ -166,12 +169,12 @@ export default function AboutSection() {
                           about wellness and dedicated to providing exceptional care to every client.
                         </p>
                         <div className="grid grid-cols-2 gap-4">
-                          <div className="text-center p-4 bg-primary/5 rounded-lg">
-                            <div className="text-2xl font-bold text-primary mb-1">5+</div>
+                          <div className="text-center p-4 bg-mayomi-50 rounded-xl ring-1 ring-mayomi-200">
+                            <div className="text-2xl font-bold text-gradient-brand mb-1">5+</div>
                             <div className="text-sm text-gray-600">Certified Therapists</div>
                           </div>
-                          <div className="text-center p-4 bg-primary/5 rounded-lg">
-                            <div className="text-2xl font-bold text-primary mb-1">100+</div>
+                          <div className="text-center p-4 bg-peach-soft/60 rounded-xl ring-1 ring-peach/30">
+                            <div className="text-2xl font-bold text-peach-deep mb-1">100+</div>
                             <div className="text-sm text-gray-600">Hours Training</div>
                           </div>
                         </div>
@@ -185,7 +188,7 @@ export default function AboutSection() {
             {/* Right: Image and Testimonials */}
             <div className="space-y-8">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-3xl"></div>
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-gold/40 via-peach/25 to-mayomi-300/50 rounded-[1.75rem] blur-sm"></div>
                 <div className="relative bg-white rounded-3xl p-8 shadow-soft ring-1 ring-black/5">
                   <div className="text-center mb-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">What Our Clients Say</h3>
@@ -226,13 +229,13 @@ export default function AboutSection() {
           <div className="rounded-3xl bg-white p-6 md:p-10 shadow-soft ring-1 ring-black/5">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">Reservation</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gradient-brand mb-2">Reservation</h2>
                 <p className="text-gray-600">
                   Pilih cabang terdekat, lalu booking langsung lewat WhatsApp.
                 </p>
               </div>
               <div className="flex items-center gap-2 rounded-full border border-mayomi-200 bg-mayomi-50 px-4 py-2 self-start md:self-auto">
-                <span className="h-2 w-2 rounded-full bg-mayomi-400 animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-mayomi-500 animate-pulse" />
                 <span className="text-sm font-medium text-mayomi-700">
                   Buka setiap hari &middot; {OPERATING_HOURS}
                 </span>
@@ -240,11 +243,12 @@ export default function AboutSection() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {BRANCHES.map((branch) => (
+              {BRANCHES.map((branch, i) => (
                 <div
                   key={branch.id}
-                  className="group rounded-2xl border border-gray-200 p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-soft"
+                  className={`group relative overflow-hidden rounded-2xl ${accentAt(i).soft} p-5 pt-6 ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft ${accentAt(i).ring}`}
                 >
+                  <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${accentAt(i).gradient}`} aria-hidden="true" />
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
                       <h3 className="font-semibold text-gray-800">{branch.area}</h3>
@@ -277,7 +281,7 @@ export default function AboutSection() {
                   <div className="mt-4 flex items-center gap-2">
                     <a
                       href={telUrl(branch)}
-                      className="flex-1 rounded-full border border-primary/30 px-4 py-2 text-center text-sm font-medium text-primary transition-colors hover:bg-primary/5"
+                      className="flex-1 rounded-full border border-primary/30 bg-white px-4 py-2 text-center text-sm font-medium text-primary transition-colors hover:bg-mayomi-50"
                     >
                       {branch.phone}
                     </a>
@@ -285,7 +289,7 @@ export default function AboutSection() {
                       href={waUrl(branch, `Halo Mayomi ${branch.area}, saya ingin booking sesi massage.`)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-mayomi-700"
+                      className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:brightness-110"
                     >
                       Booking
                     </a>
@@ -297,7 +301,7 @@ export default function AboutSection() {
         </section>
 
         <div id="gallery" className="mt-16 py-12 px-4 bg-white rounded-3xl shadow-soft ring-1 ring-black/5 max-w-4xl mx-auto flex flex-col items-center gap-4">
-          <h2 className="text-2xl font-bold text-primary mb-2">Gallery</h2>
+          <h2 className="text-2xl font-bold text-gradient-brand mb-2">Gallery</h2>
           <Carousel className="w-full max-w-2xl relative">
             <CarouselContent>
               {[

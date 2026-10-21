@@ -24,11 +24,11 @@ export default function CartBar() {
         <button
           type="button"
           onClick={toggleCart}
-          className="flex w-full items-center gap-3 rounded-2xl bg-primary px-4 py-3.5 text-white shadow-lift transition-colors hover:bg-mayomi-700"
+          className="flex w-full items-center gap-3 rounded-2xl bg-brand px-4 py-3.5 text-white shadow-lift transition-all hover:brightness-110"
         >
           <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
             <ShoppingCart className="h-5 w-5" />
-            <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold">
+            <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-warm px-1 text-[11px] font-bold text-mayomi-900">
               {getTotalItems()}
             </span>
           </span>

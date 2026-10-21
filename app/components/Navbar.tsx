@@ -12,13 +12,19 @@ import { useUser } from '@/server/auth';
 import { signOut } from '../(login)/action';
 import { useCart } from '@/app/contexts/CartContext'
 
+// `section` links scroll within the home page; the others are separate routes.
 const NAV_LINKS = [
-  { href: '/', label: 'Beranda' },
-  { href: '/#about', label: 'Tentang Kami' },
-  { href: '/#branches', label: 'Cabang' },
-  { href: '/pricing', label: 'Layanan' },
-  { href: '/blog', label: 'Blog' },
+  { id: 'home', href: '/', label: 'Beranda', section: 'home' },
+  { id: 'about', href: '/#about', label: 'Tentang Kami', section: 'about' },
+  { id: 'branches', href: '/#branches', label: 'Cabang', section: 'branches' },
+  { id: 'pricing', href: '/pricing', label: 'Layanan' },
+  { id: 'blog', href: '/blog', label: 'Blog' },
 ];
+type NavLink = (typeof NAV_LINKS)[number];
+
+/** Home page sections in page order, used for scroll-spy. */
+const HOME_SECTIONS = ['home', 'about', 'branches'];
+const NAV_OFFSET = 96;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -51,48 +57,50 @@ export default function Navbar() {
       const isScrolled = window.scrollY > 50;
       setScrolled(isScrolled);
 
-      // Update active section based on scroll position
-      const sections = NAV_LINKS.map(link => link.href.replace('#', ''));
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+      // Scroll-spy: the last section whose top has passed under the navbar
+      // wins, so the reservation/gallery blocks still count as "about".
+      let current = 'home';
+      for (const id of HOME_SECTIONS) {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= NAV_OFFSET + 8) {
+          current = id;
         }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
       }
+      setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
+
+  const isLinkActive = (link: NavLink) => {
+    if (link.section) return pathname === '/' && activeSection === link.section;
+    return pathname.startsWith(link.href);
+  };
 
 
 
   // Smooth scroll to section or navigate to route
-  const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
-      const sectionId = href.replace('#', '');
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const offset = 80; // Account for fixed navbar height
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        });
-        setActiveSection(sectionId);
+  const handleNavClick = (link: NavLink) => {
+    setOpen(false);
+    if (link.section && pathname === '/') {
+      // Already on the home page: move the pill right away, then scroll.
+      setActiveSection(link.section);
+      if (link.section === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', '/');
+        return;
       }
-      setOpen(false);
-    } else {
-      router.push(href);
-      setOpen(false);
+      const element = document.getElementById(link.section);
+      if (element) {
+        const top = element.getBoundingClientRect().top + window.scrollY - NAV_OFFSET + 16;
+        window.scrollTo({ top, behavior: 'smooth' });
+        history.replaceState(null, '', link.href);
+      }
+      return;
     }
+    router.push(link.href);
   };
 
   return (
@@ -130,27 +138,30 @@ export default function Navbar() {
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
-            const sectionId = link.href.replace('#', '');
-            const isSection = link.href.startsWith('#');
-            const isActive = isSection ? activeSection === sectionId : pathname === link.href;
+            const isActive = isLinkActive(link);
             return (
               <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 relative group ${scrolled
+                key={link.id}
+                onClick={() => handleNavClick(link)}
+                className={`isolate px-6 py-3 rounded-full font-medium transition-colors duration-300 relative ${scrolled
                   ? isActive
-                    ? 'bg-primary text-white shadow-md'
+                    ? 'text-white'
                     : 'text-gray-700 hover:text-primary hover:bg-primary/10'
                   : isActive
-                    ? 'bg-white/90 text-primary shadow-md'
+                    ? 'text-primary'
                     : 'text-white/90 hover:text-white hover:bg-white/20'
                   }`}
                 aria-current={isActive ? 'page' : undefined}
               >
-                {link.label}
+                {/* One shared pill that slides to whichever link is active */}
                 {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-current rounded-full"></span>
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className={`absolute inset-0 -z-10 rounded-full ${scrolled ? 'bg-brand shadow-glow' : 'bg-white/90 shadow-md'}`}
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
                 )}
+                {link.label}
               </button>
             );
           })}
@@ -173,8 +184,8 @@ export default function Navbar() {
           <button
             onClick={handleBookNow}
             className={`px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 border group ${scrolled
-              ? 'bg-primary hover:bg-primary/90 text-white border-primary'
-              : 'bg-white/90 hover:bg-white text-primary border-white/50'
+              ? 'bg-brand hover:brightness-110 text-white border-transparent'
+              : 'bg-brand-warm hover:brightness-105 text-mayomi-900 border-white/40'
               }`}
           >
             Booking
@@ -251,15 +262,13 @@ export default function Navbar() {
                   <div className="flex-1 overflow-y-auto p-6">
                     <nav className="space-y-2">
                       {NAV_LINKS.map((link) => {
-                        const sectionId = link.href.replace('#', '');
-                        const isSection = link.href.startsWith('#');
-                        const isActive = isSection ? activeSection === sectionId : pathname === link.href;
+                        const isActive = isLinkActive(link);
                         return (
                           <button
-                            key={link.href}
-                            onClick={() => handleNavClick(link.href)}
+                            key={link.id}
+                            onClick={() => handleNavClick(link)}
                             className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-between ${isActive
-                              ? 'bg-primary text-white shadow-md'
+                              ? 'bg-brand text-white shadow-glow'
                               : 'text-gray-700 hover:bg-primary/10 hover:text-primary'
                               }`}
                             aria-current={isActive ? 'page' : undefined}
@@ -290,7 +299,7 @@ export default function Navbar() {
                     {/* Book Session Button - Full Width */}
                     <button
                       onClick={() => { handleBookNow(); setOpen(false); }}
-                      className="w-full bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                      className="w-full bg-brand hover:brightness-110 text-white px-6 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                     >
                       <span>Booking Sekarang</span>
                       <span className="text-lg">→</span>

@@ -25,6 +25,10 @@ export default function Home() {
           {/* Sage-tinted scrim keeps the photo on-brand and the copy legible */}
           <div className="absolute inset-0 bg-gradient-to-r from-mayomi-900/90 via-mayomi-900/70 to-mayomi-900/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/60 via-transparent to-transparent" />
+          {/* Warm colour blooms so the hero feels sunny rather than flat green */}
+          <div className="blob -left-24 top-24 h-80 w-80 bg-mayomi-400/40" aria-hidden="true" />
+          <div className="blob right-0 -bottom-20 h-96 w-96 bg-peach/35" aria-hidden="true" />
+          <div className="blob right-1/3 top-10 h-64 w-64 bg-gold/25" aria-hidden="true" />
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 py-20 md:py-28">
@@ -47,7 +51,7 @@ export default function Home() {
             <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.08] tracking-tight text-balance animate-fade-up delay-1">
               Badan pegal?
               <br />
-              <span className="text-mayomi-200">Waktunya rileks</span> di
+              <span className="text-gradient-warm">Waktunya rileks</span> di
               Mayomi.
             </h1>
 
@@ -60,7 +64,7 @@ export default function Home() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up delay-3">
               <a
                 href="#branches"
-                className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-mayomi-700 shadow-lift transition-all hover:bg-mayomi-50 focus:outline-none focus:ring-2 focus:ring-white/60"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-brand-warm px-7 py-3.5 text-base font-bold text-mayomi-900 shadow-lift transition-all hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-white/60"
               >
                 <MapPin className="h-5 w-5" />
                 Pilih Cabang &amp; Booking
@@ -87,7 +91,7 @@ export default function Home() {
       <BranchesSection />
 
       {/* Closing CTA */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-mayomi-700 via-mayomi-600 to-mayomi-800 py-16 md:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-br from-mayomi-700 via-mayomi-600 to-teal-deep py-16 md:py-24">
         <Image
           src="/cta-lastt.jpg"
           alt=""
@@ -96,7 +100,11 @@ export default function Home() {
         />
         {/* Soft gold bloom, echoing the accent used across the site */}
         <div
-          className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold/20 blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold/30 blur-3xl"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-28 -left-20 h-80 w-80 rounded-full bg-peach/30 blur-3xl"
           aria-hidden="true"
         />
 
@@ -107,7 +115,7 @@ export default function Home() {
           </span>
 
           <h2 className="mt-5 text-3xl md:text-4xl font-bold text-white tracking-tight text-balance">
-            Siap untuk rileks hari ini?
+            Siap untuk <span className="text-gradient-warm">rileks</span> hari ini?
           </h2>
 
           <p className="mt-4 text-base md:text-lg leading-relaxed text-white/75 text-balance">
@@ -119,7 +127,7 @@ export default function Home() {
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a
               href="#branches"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-mayomi-700 shadow-lift transition-all hover:bg-mayomi-50"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-warm px-8 py-3.5 text-base font-bold text-mayomi-900 shadow-lift transition-all hover:-translate-y-0.5 hover:brightness-105"
             >
               <MapPin className="h-4 w-4" />
               Pilih Cabang &amp; Booking

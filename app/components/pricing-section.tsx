@@ -16,6 +16,7 @@ import {
   type MenuPackage,
   type Treatment,
 } from "@/lib/menu"
+import { accentAt, type Accent } from "@/lib/accents"
 import MenuIcon from "./menu-icon"
 import Toast from "./Toast"
 
@@ -84,6 +85,8 @@ export default function PricingPage() {
       <div className="relative w-full h-64 md:h-80 overflow-hidden">
         <Image src="/massage.webp" alt="" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/90 via-mayomi-900/60 to-mayomi-900/30" />
+        <div className="blob -right-16 -top-16 h-72 w-72 bg-peach/35" aria-hidden="true" />
+        <div className="blob left-1/4 -bottom-24 h-72 w-72 bg-teal/30" aria-hidden="true" />
         <div className="absolute inset-0 flex items-end">
           <div className="w-full max-w-6xl mx-auto px-4 md:px-8 pb-8 md:pb-12">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/90 backdrop-blur-sm">
@@ -91,7 +94,7 @@ export default function PricingPage() {
               Layanan &amp; Harga
             </span>
             <h1 className="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">
-              Pilih Treatment Kamu
+              Pilih <span className="text-gradient-warm">Treatment</span> Kamu
             </h1>
             <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-white/75">
               Harga sama di seluruh {BRANCHES.length} cabang Mayomi. {TAX_NOTE}.
@@ -106,11 +109,11 @@ export default function PricingPage() {
         className="sticky top-16 z-30 border-b border-black/5 bg-cream/90 backdrop-blur-md md:top-20"
       >
         <div className="max-w-6xl mx-auto flex gap-2 overflow-x-auto px-4 py-3 md:px-8 no-scrollbar">
-          {SECTIONS.map((s) => (
+          {SECTIONS.map((s, i) => (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="whitespace-nowrap rounded-full border border-primary/20 bg-white px-4 py-1.5 text-sm font-medium text-mayomi-700 transition-colors hover:border-primary hover:bg-primary hover:text-white"
+              className={`whitespace-nowrap rounded-full ${accentAt(i).soft} px-4 py-1.5 text-sm font-semibold ${accentAt(i).text} ring-1 ring-black/5 transition-all hover:-translate-y-0.5 hover:shadow-soft`}
             >
               {s.label}
             </a>
@@ -123,14 +126,16 @@ export default function PricingPage() {
         <section id="treatments" className="scroll-mt-36 mb-16">
           <SectionHeading
             icon={<Sparkles className="h-5 w-5" />}
+            accent={accentAt(0)}
             title="Treatment"
             subtitle="Pilih durasi, tambahkan ke keranjang, lalu kirim booking ke cabang pilihanmu via WhatsApp."
           />
           <div className="grid gap-5 md:grid-cols-2">
-            {TREATMENTS.map((treatment) => (
+            {TREATMENTS.map((treatment, i) => (
               <TreatmentCard
                 key={treatment.id}
                 treatment={treatment}
+                accent={accentAt(i)}
                 onAdd={(option) => handleAddTreatment(treatment, option)}
               />
             ))}
@@ -141,6 +146,7 @@ export default function PricingPage() {
         <section id="packages" className="scroll-mt-36 mb-16">
           <SectionHeading
             icon={<Package className="h-5 w-5" />}
+            accent={accentAt(1)}
             title="Paket Hemat"
             subtitle="Body Massage 60 menit dipadukan dengan treatment favorit, total 90 menit."
           />
@@ -148,12 +154,14 @@ export default function PricingPage() {
             {PACKAGES.map((pkg) => (
               <article
                 key={pkg.id}
-                className={`relative flex flex-col rounded-2xl bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift ${
-                  pkg.popular ? "ring-2 ring-primary" : "ring-1 ring-black/5"
+                className={`relative flex flex-col rounded-2xl p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift ${
+                  pkg.popular
+                    ? "bg-gradient-to-br from-mayomi-50 via-white to-peach-soft/60 ring-2 ring-mayomi-500"
+                    : "bg-white ring-1 ring-black/5"
                 }`}
               >
                 {pkg.popular && (
-                  <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-white shadow">
+                  <span className="absolute -top-3 left-6 rounded-full bg-brand-warm px-3 py-1 text-[11px] font-bold text-mayomi-900 shadow">
                     Paling Favorit
                   </span>
                 )}
@@ -176,13 +184,13 @@ export default function PricingPage() {
                     <Clock className="h-3.5 w-3.5" />
                     {pkg.duration} menit
                   </div>
-                  <div className="mt-1 text-2xl font-bold text-primary">{formatIDR(pkg.price)}</div>
+                  <div className="mt-1 text-2xl font-bold text-gradient-brand">{formatIDR(pkg.price)}</div>
                   <button
                     type="button"
                     onClick={() => handleAddPackage(pkg)}
                     className={`mt-4 flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${
                       pkg.popular
-                        ? "bg-primary text-white hover:bg-mayomi-700"
+                        ? "bg-brand text-white shadow-glow hover:brightness-110"
                         : "border border-primary/30 text-primary hover:bg-primary hover:text-white"
                     }`}
                   >
@@ -199,13 +207,14 @@ export default function PricingPage() {
         <section id="addons" className="scroll-mt-36 mb-12">
           <SectionHeading
             icon={<Plus className="h-5 w-5" />}
+            accent={accentAt(2)}
             title="Add-on"
             subtitle="Tambahan untuk melengkapi sesi kamu."
           />
           <div className="divide-y divide-black/5 overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-black/5">
-            {ADDONS.map((addon) => (
-              <div key={addon.id} className="flex items-center gap-4 p-4 md:p-5">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-mayomi-50 text-primary">
+            {ADDONS.map((addon, i) => (
+              <div key={addon.id} className="flex items-center gap-4 p-4 md:p-5 transition-colors hover:bg-cream">
+                <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accentAt(i).gradient} text-white shadow-sm`}>
                   <MenuIcon name={addon.icon} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -256,20 +265,22 @@ export default function PricingPage() {
 
 function SectionHeading({
   icon,
+  accent,
   title,
   subtitle,
 }: {
   icon: React.ReactNode
+  accent: Accent
   title: string
   subtitle: string
 }) {
   return (
     <div className="mb-6 flex items-start gap-3">
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-primary text-white">
+      <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accent.gradient} text-white shadow-soft`}>
         {icon}
       </div>
       <div>
-        <h2 className="text-2xl md:text-3xl font-bold text-primary">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-mayomi-800">{title}</h2>
         <p className="mt-1 text-sm md:text-base text-gray-600">{subtitle}</p>
       </div>
     </div>
@@ -278,9 +289,11 @@ function SectionHeading({
 
 function TreatmentCard({
   treatment,
+  accent,
   onAdd,
 }: {
   treatment: Treatment
+  accent: Accent
   onAdd: (option: MenuOption) => void
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -289,13 +302,14 @@ function TreatmentCard({
   )
 
   return (
-    <article className="flex flex-col rounded-2xl bg-white p-5 md:p-6 shadow-soft ring-1 ring-black/5 transition-shadow hover:shadow-lift">
+    <article className={`relative flex flex-col overflow-hidden rounded-2xl bg-white p-5 md:p-6 shadow-soft ring-1 ring-black/5 transition-all hover:-translate-y-0.5 hover:shadow-lift hover:ring-2 ${accent.ring}`}>
+      <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${accent.gradient}`} aria-hidden="true" />
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mayomi-100 to-mayomi-200 text-primary">
+        <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accent.gradient} text-white shadow-soft`}>
           <MenuIcon name={treatment.icon} className="h-6 w-6" />
         </div>
         <div className="min-w-0">
-          <span className="text-xs font-semibold uppercase tracking-wider text-gold-deep">
+          <span className={`text-xs font-semibold uppercase tracking-wider ${accent.text}`}>
             {treatment.category}
           </span>
           <h3 className="text-lg md:text-xl font-bold text-gray-800">{treatment.name}</h3>
@@ -335,7 +349,7 @@ function TreatmentCard({
                 }`}
               >
                 {option.popular && (
-                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
+                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand-warm px-2 py-0.5 text-[10px] font-bold text-mayomi-900">
                     Favorit
                   </span>
                 )}
@@ -349,7 +363,7 @@ function TreatmentCard({
         <button
           type="button"
           onClick={() => onAdd(selected)}
-          className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-mayomi-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+          className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white shadow-sm transition-all hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
         >
           <Plus className="h-4 w-4" />
           Tambah {selected.duration} menit &middot; {formatIDR(selected.price)}

@@ -11,36 +11,45 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Mayomi sage scale */
-  --mayomi-50: #F4F6F1;
-  --mayomi-100: #E6EBDF;
-  --mayomi-200: #CDD8C1;
-  --mayomi-300: #AEBE9C;
-  --mayomi-400: #8D9F78;
-  --mayomi-500: #6B7B5A;
-  --mayomi-600: #5A6B4A;
-  --mayomi-700: #47563B;
-  --mayomi-800: #37432E;
-  --mayomi-900: #262F20;
-  --mayomi-green: #6B7B5A;
+  /* Mayomi sage scale: fresher and more saturated than the original
+     muted sage, still in the same olive-green family as the logo */
+  --mayomi-50: #F3F8EE;
+  --mayomi-100: #E3EFD6;
+  --mayomi-200: #C7DFAF;
+  --mayomi-300: #A6CA85;
+  --mayomi-400: #85B062;
+  --mayomi-500: #6A9548;
+  --mayomi-600: #567A3A;
+  --mayomi-700: #44612F;
+  --mayomi-800: #354B26;
+  --mayomi-900: #25351B;
+  --mayomi-green: #567A3A;
 
   /* Warm neutral surfaces */
-  --cream: #FAF8F4;
-  --sand: #F2EDE5;
-  --clay: #E4DCCF;
+  --cream: #FBF8F2;
+  --sand: #F5EEE2;
+  --clay: #EBDFCC;
 
-  /* Accent */
-  --gold: #C9A227;
-  --gold-soft: #F0E2B6;
+  /* Accents */
+  --gold: #E0A92A;
+  --gold-soft: #FBE9B7;
   /* Darker gold for small text on light surfaces (WCAG AA on white) */
-  --gold-deep: #8A6D14;
+  --gold-deep: #8A6510;
+  /* Warm peach/terracotta: the "alive" counterpoint to sage */
+  --peach: #F08A62;
+  --peach-soft: #FDE4D8;
+  --peach-deep: #A84826;
+  /* Calm teal for water/aroma touches */
+  --teal: #3E9C8F;
+  --teal-soft: #D5F0EB;
+  --teal-deep: #22685F;
 
   /* Elevation */
   --shadow-xs: 0 1px 2px rgb(38 47 32 / 0.05);
   --shadow-sm: 0 2px 8px -2px rgb(38 47 32 / 0.08);
   --shadow-md: 0 8px 24px -8px rgb(38 47 32 / 0.12);
   --shadow-lg: 0 20px 48px -16px rgb(38 47 32 / 0.18);
-  --shadow-glow: 0 0 0 1px rgb(107 123 90 / 0.08), 0 12px 40px -12px rgb(107 123 90 / 0.28);
+  --shadow-glow: 0 0 0 1px rgb(86 122 58 / 0.10), 0 12px 40px -12px rgb(86 122 58 / 0.35);
 
   --radius: 1rem;
   --background: oklch(1 0 0);
@@ -49,7 +58,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #6B7B5A;
+  --primary: #567A3A;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: #F7F3EF;
   --secondary-foreground: oklch(0.205 0 0);
@@ -93,6 +102,12 @@
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-gold-deep: var(--gold-deep);
+  --color-peach: var(--peach);
+  --color-peach-soft: var(--peach-soft);
+  --color-peach-deep: var(--peach-deep);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-teal-deep: var(--teal-deep);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -336,12 +351,41 @@ html {
 .shadow-lift { box-shadow: var(--shadow-lg); }
 .shadow-glow { box-shadow: var(--shadow-glow); }
 
-/* Subtle grain/noise-free gradient wash for section backgrounds */
+/* Colourful gradient wash for section backgrounds */
 .bg-wash {
   background:
-    radial-gradient(60rem 30rem at 10% -10%, rgb(107 123 90 / 0.10), transparent 60%),
-    radial-gradient(50rem 26rem at 90% 0%, rgb(201 162 39 / 0.08), transparent 60%),
+    radial-gradient(55rem 28rem at 5% -5%, rgb(133 176 98 / 0.18), transparent 60%),
+    radial-gradient(45rem 24rem at 95% 5%, rgb(240 138 98 / 0.14), transparent 60%),
+    radial-gradient(40rem 22rem at 50% 105%, rgb(224 169 42 / 0.12), transparent 60%),
     var(--cream);
+}
+
+/* Brand gradient: sage -> leaf -> teal, used on buttons and highlights */
+.bg-brand {
+  background-image: linear-gradient(135deg, var(--mayomi-600) 0%, var(--mayomi-500) 55%, var(--teal) 100%);
+}
+.bg-brand-warm {
+  background-image: linear-gradient(135deg, var(--gold) 0%, var(--peach) 100%);
+}
+.text-gradient-brand {
+  background-image: linear-gradient(90deg, var(--mayomi-600), var(--mayomi-500) 45%, var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gradient-warm {
+  background-image: linear-gradient(90deg, var(--gold-soft), #FFC59E 50%, var(--peach));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft blurred colour blob for decorative section backgrounds */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  pointer-events: none;
 }
 
 .text-balance { text-wrap: balance; }

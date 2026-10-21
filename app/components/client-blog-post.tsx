@@ -9,7 +9,7 @@ interface ClientBlogPostProps {
 
 export default function ClientBlogPost({ post }: ClientBlogPostProps) {
   return (
-    <div className="relative min-h-screen w-full bg-gray-50">
+    <div className="relative min-h-screen w-full bg-wash">
       {/* Hero Section with Background Image */}
       <div className="relative h-[40vh] sm:h-[50vh] lg:h-[60vh] w-full overflow-hidden">
         <Image
@@ -19,7 +19,7 @@ export default function ClientBlogPost({ post }: ClientBlogPostProps) {
           className="object-cover object-center"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-mayomi-900/60 via-mayomi-900/35 to-teal-deep/70" />
 
         {/* Hero Content */}
         <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -30,7 +30,7 @@ export default function ClientBlogPost({ post }: ClientBlogPostProps) {
             >
               {post.title}
             </h1>
-            <div className="w-16 sm:w-20 h-1 bg-primary mx-auto rounded-full" />
+            <div className="w-16 sm:w-20 h-1.5 bg-brand-warm mx-auto rounded-full" />
           </div>
         </div>
       </div>
@@ -47,8 +47,7 @@ export default function ClientBlogPost({ post }: ClientBlogPostProps) {
             <div className="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-16">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 sm:mb-12">
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
-                  <span className="text-sm sm:text-base text-gray-600 font-medium">
+                  <span className="rounded-full bg-peach-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-peach-deep">
                     Blog Post
                   </span>
                 </div>
@@ -72,7 +71,7 @@ export default function ClientBlogPost({ post }: ClientBlogPostProps) {
                   prose-a:text-primary prose-a:font-medium prose-a:no-underline hover:prose-a:underline
                   prose-strong:text-gray-900 prose-strong:font-semibold
                   prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:text-gray-700
-                  prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-gray-50 
+                  prose-blockquote:border-l-4 prose-blockquote:border-peach prose-blockquote:bg-peach-soft/40 
                   prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-8 prose-blockquote:not-italic
                   prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
                   prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-lg prose-pre:p-4
@@ -94,7 +93,7 @@ export default function ClientBlogPost({ post }: ClientBlogPostProps) {
       {/* Scroll to Top Button (optional) */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 hover:scale-110 z-50 hidden sm:flex items-center justify-center"
+        className="fixed bottom-6 right-6 w-12 h-12 bg-brand text-white rounded-full shadow-glow hover:brightness-110 transition-all duration-300 hover:scale-110 z-50 hidden sm:flex items-center justify-center"
         aria-label="Scroll to top"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

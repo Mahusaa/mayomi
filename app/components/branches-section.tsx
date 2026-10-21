@@ -1,20 +1,23 @@
 import { MapPin, Phone, Clock, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import { BRANCHES, mapsUrl, waUrl, telUrl } from "@/lib/branches"
+import { accentAt } from "@/lib/accents"
 import OpenStatus from "./open-status"
 
 export default function BranchesSection() {
   return (
-    <section id="branches" className="bg-wash py-16 md:py-24">
-      <div className="container mx-auto px-4">
+    <section id="branches" className="relative overflow-hidden bg-gradient-to-b from-mayomi-50 via-cream to-peach-soft/40 py-16 md:py-24">
+      <div className="blob -right-24 top-10 h-80 w-80 bg-teal/15" aria-hidden="true" />
+      <div className="blob -left-24 bottom-0 h-80 w-80 bg-gold/20" aria-hidden="true" />
+      <div className="relative container mx-auto px-4">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-glow">
             <MapPin className="h-3.5 w-3.5" />
             {BRANCHES.length} Cabang
           </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-bold text-primary text-balance">
-            Temukan Mayomi Terdekat
+          <h2 className="mt-4 text-3xl md:text-4xl font-bold text-mayomi-800 text-balance">
+            Temukan Mayomi <span className="text-gradient-brand">Terdekat</span>
           </h2>
           <p className="mt-3 text-gray-600 leading-relaxed text-balance">
             Hadir di Jakarta Selatan dan Tangerang. Pilih cabang terdekat, lalu
@@ -24,10 +27,12 @@ export default function BranchesSection() {
 
         {/* Branch grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {BRANCHES.map((branch, i) => (
+          {BRANCHES.map((branch, i) => {
+            const accent = accentAt(i)
+            return (
             <article
               key={branch.id}
-              className={`group animate-fade-up delay-${i + 1} flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift`}
+              className={`group animate-fade-up delay-${i + 1} flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift ${accent.ring} hover:ring-2`}
             >
               {/* Photo */}
               <div className="relative h-40 w-full overflow-hidden">
@@ -38,15 +43,16 @@ export default function BranchesSection() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/70 via-mayomi-900/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-mayomi-900/75 via-mayomi-900/10 to-transparent" />
+                <div className={`absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r ${accent.gradient}`} aria-hidden="true" />
                 <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
                   {branch.featured && (
-                    <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm">
+                    <span className="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-mayomi-700 shadow-sm">
                       Cabang Utama
                     </span>
                   )}
                   {branch.badge && (
-                    <span className="rounded-full bg-gold px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+                    <span className="rounded-full bg-brand-warm px-2.5 py-1 text-[11px] font-semibold text-mayomi-900 shadow-sm">
                       {branch.badge}
                     </span>
                   )}
@@ -67,13 +73,13 @@ export default function BranchesSection() {
               {/* Details */}
               <div className="flex flex-1 flex-col gap-4 p-5">
                 <div className="flex items-start gap-2.5 text-sm text-gray-600">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                  <MapPin className={`mt-0.5 h-4 w-4 flex-shrink-0 ${accent.text}`} />
                   <span className="leading-relaxed">{branch.address}</span>
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2.5 text-sm text-gray-600">
-                    <Clock className="h-4 w-4 flex-shrink-0 text-primary" />
+                    <Clock className={`h-4 w-4 flex-shrink-0 ${accent.text}`} />
                     <span>Setiap hari, {branch.hours}</span>
                   </div>
                   {!branch.openingSoon && (
@@ -95,7 +101,7 @@ export default function BranchesSection() {
                   {branch.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-mayomi-50 px-2.5 py-1 text-[11px] font-medium text-mayomi-700"
+                      className={`rounded-full ${accent.soft} px-2.5 py-1 text-[11px] font-semibold ${accent.text}`}
                     >
                       {tag}
                     </span>
@@ -111,7 +117,7 @@ export default function BranchesSection() {
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-mayomi-700"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:brightness-110"
                   >
                     Booking
                   </a>
@@ -128,7 +134,8 @@ export default function BranchesSection() {
                 </div>
               </div>
             </article>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
